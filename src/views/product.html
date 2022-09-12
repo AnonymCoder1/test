@@ -1,0 +1,172 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsMiner Products | WhatsMiner M50S, WhatsMiner M50,WhatsMiner M53</title>
+    <meta name="keywords" content="WhatsMiner M30S++ 112T,WhatsMiner M30S+,WhatsMiner M30S，WhatsMiner M50S,WhatsMiner M53S,WhatsMiner M33S++,WhatsMiner M33S+,WhatsMiner M50,Asic Miner,Bitcoin Mining">
+    <meta name="description" content="WhatsMiner is a leading brand of mining hardware and chip design developed by MicroBT,Including M50S,M50,M53,M20S,M30S++ products  sales.">
+    <link rel="stylesheet" class="link" href="..\..\public\css\element-ui.css">
+    <link rel="stylesheet" class="link" href="css\product.css?v=2.020220805">
+    <link rel="stylesheet" class="links" href="">
+    <link rel="icon" type="image/png" sizes="32x32" href="..\..\static\favicon.ico">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-227533464-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "UA-227533464-1");
+    </script>
+  </head>
+
+  <body style="overflow: -Scroll; overflow-x: hidden">
+    <div id="app">
+      <!-- <iframe v-cloak src="../../public/views/header.html" frameborder="0" class="header" id="header"></iframe> -->
+      <iframe v-cloak="" src="..\..\public\views\header.html" frameborder="0" class="header" id="header"></iframe>
+
+      <div class="message-wrap" v-cloak="" v-if="bannerInfo && bannerInfo.status == 1 && bannerInfo.streamerType == 0 && !isCloseMsg" ref="imgClose">
+        <img src="..\..\static\icon\horn-active.png" alt="horn" class="horn">
+        <div class="animate_set">
+          <span class="message">{{ isEn ? bannerInfo && bannerInfo.contentEn : bannerInfo && bannerInfo.contentZh }}</span>
+        </div>
+        <img src="..\..\static\close-button.png" alt="close" @click="close" class="close-button">
+      </div>
+      <!-- 外层容器 -->
+
+      <div class="wrap" v-cloak="">
+        <!-- 顶部图片部分的容器 -->
+        <div class="banner_wrap pc_img phone_img">
+          <img class="pc_img" src="..\..\static\product_banner.jpg">
+          <!-- <img class="phone_img" src="../../static/位图@2x.png" /> -->
+          <div class="text-wrap">
+            <h3>{{ $t("productMainTitle") }}</h3>
+            <p>{{ $t("productSubTitle") }}</p>
+          </div>
+        </div>
+        <!-- 产品展示部分的容器 -->
+        <main class="product_wrap">
+          <div class="product_title">
+            <span class="title product_wrap_title" :class="{'active':ins==-1}" @click="showAll()"><i>{{$t("All")}}</i></span>
+            <span class="title product_wrap_title" v-for="(item, index) in classificationList" @click="classificationChange(item, index)" :class="{ 'active': ins == index }">
+              <i>{{ tt(item,"part") }}</i></span>
+          </div>
+
+          <!-- 产品部分 -->
+          <div class="container">
+            <div class="item spots product_item" v-for="product in visibleProds" @click="gotoDetails(product)">
+              <div class="product_consultation" @click.stop="isShowProductConsultation = true">
+                <span>{{ $t('productConsulation') }}</span>
+              </div>
+              <h1 class="product_name">{{ tt(product, "name") }}</h1>
+
+              <img :src="product.prodPic" class="product_img" :alt="tt(product, 'name')">
+              <div class="product_info product_info_time">
+                <div class="info_item">
+                  <span class="title">{{$t("compuPower")}}</span>
+                  <span class="info">{{product.compuPower}}</span>
+                </div>
+                <div class="info_item">
+                  <span class="title">{{$t("powerConsum")}}</span>
+                  <span class="info">{{product.powerConsum}}</span>
+                </div>
+                <div class="info_item">
+                  <span class="title">{{$t("powerEff")}}</span>
+                  <span class="info">{{product.powerEff}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="shopping_cart" @click="shoppingCart">
+          <img src="../../static/购物车@2x.png" alt="" />
+        </div> -->
+        </main>
+      </div>
+      <iframe v-cloak="" src="..\..\public\views\footer.html" frameborder="0" class="footer" id="footer"></iframe>
+      <div class="tab_bar">
+        <a href="..\..\index.html" class="tab_bar_item">
+          <img src="..\..\static\tab_bar_home.png" alt="tab_bar_item">
+        </a>
+        <a href="products.html" class="tab_bar_item">
+          <img src="..\..\static\proudect_home.png" alt="tab_bar_item">
+        </a>
+        <a href="support.html" class="tab_bar_item">
+          <img src="..\..\static\tab_bar_jishu2.png" alt="tab_bar_item">
+        </a>
+        <a href="personal.html" class="tab_bar_item">
+          <img src="..\..\static\tab_bar_personal%20.png" alt="tab_bar_item">
+        </a>
+      </div>
+
+      <!-- 产品咨询的弹窗 -->
+      <el-dialog :visible.sync="isShowProductConsultation" class="conditions-dialog" :title="$t('productConsulation')">
+        <el-form :model="inquery" :rules="inqueryRule" ref="form">
+          <el-form-item prop="name" :label="$t('name')">
+            <el-input v-model="inquery.name" :placeholder="$t('PleaseFll')"></el-input>
+          </el-form-item>
+          <el-form-item prop="company" :label="$t('company')">
+            <el-input v-model="inquery.company" :placeholder="$t('PleaseFll')"></el-input>
+          </el-form-item>
+          <el-form-item prop="email" :label="$t('email')">
+            <el-input v-model="inquery.email" :placeholder="$t('PleaseFll')"></el-input>
+          </el-form-item>
+          <el-form-item prop="contact" :label="$t('contact')">
+            <el-input v-model="inquery.contact" type="number" :placeholder="$t('PleaseFll')">
+              <template slot="prepend">
+                <div style="width: 115px">
+                  <el-select v-model="inquery.contactPrefix" style="min-width: 30px" :placeholder="$t('pleaseSelect')" filterable="">
+                    <el-option :key="code.id" v-for="code in internationalDistrictNum" :label="code.phonecode" :value="code.phonecode"></el-option>
+                  </el-select>
+                </div>
+              </template>
+            </el-input>
+          </el-form-item>
+          <el-form-item prop="model" :label="$t('model')">
+            <!-- <el-input v-model="inquery.model"></el-input> -->
+            <el-select v-model="inquery.model" style="width: 100%" :placeholder="$t('pleaseSelect')">
+              <el-option v-for="model in ModelData" :key="model.id" :label="model.modelEn" :value="model.modelEn"> </el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item prop="quantity" :label="$t('quantity')">
+            <el-input v-model="inquery.quantity" type="number" :placeholder="$t('PleaseFll')"></el-input>
+          </el-form-item>
+
+          <el-form-item prop="destination" :label="$t('destination')">
+            <el-select v-model="inquery.destination" style="width: 100%" filterable="" :placeholder="$t('pleaseSelect')">
+              <el-option :key="ctr.id" :label="ctr.name" :value="ctr.name" v-for="ctr in countries"> </el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item prop="deliveryDate" :label="$t('deliveryDate')">
+            <el-date-picker v-model="inquery.deliveryDate" type="date" :placeholder="$t('pleaseSelect')" style="width: 100%" value-format="yyyy/MM/dd"> </el-date-picker>
+          </el-form-item>
+
+          <el-form-item prop="remark" class="remark-item" :label="$t('remark')">
+            <el-input type="textarea" rows="3" v-model="inquery.remark" :placeholder="$t('remarkDesc')"> </el-input>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" v-cloak="">
+          <el-button type="primary" @click="submitInquery">{{ $t("submit") }}</el-button>
+          <el-button type="default" class="button-dialog" @click="isShowProductConsultation = false"> {{ $t("cancel") }} </el-button>
+        </div>
+      </el-dialog>
+    </div>
+    <script src="..\..\public\js\vue.js"></script>
+    <script src="..\..\public\js\vue-i18n.js"></script>
+    <script src="..\..\public\js\element-ui.js"></script>
+
+    <script src="..\..\public\axios\dist\axios.min.js"></script>
+    <script src="..\..\public\js\request.js"></script>
+
+    <script src="js\product-mixin.js"></script>
+    <script src="js\i18n.js"></script>
+    <script src="..\..\public\js\dayjs.min.js"></script>
+    <script src="js\avail_product.js?v=2.020220805"></script>
+    <script src="js\product.js?v=2.020220805"></script>
+  </body>
+</html>

@@ -1,0 +1,546 @@
+@import url(../../../public/css/rem.css);
+* {
+  padding: 0;
+  margin: 0;
+}
+/* 消息容器 */
+.message-wrap {
+  position: absolute;
+  top: 90px;
+  left: 0;
+  /* animation: moves 0.5s ease infinite; */
+  z-index: 10;
+  width: 100%;
+  height: 54px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+/* 小喇叭 */
+.message-wrap .horn {
+  width: 24px;
+  height: 24px;
+}
+/* 中间部分 */
+.message-wrap .animate_set {
+  position: relative;
+  /* transform: translateX(-100%); */
+  width: 75%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  padding-left: 24px;
+  overflow: hidden;
+}
+/* 关闭消息按钮 */
+.message-wrap .close-button {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+/* 消息文字 */
+.message-wrap .message {
+  transform: translateX(1600px);
+  max-width: fit-content;
+  margin-left: 12px;
+  color: #ccc;
+  font-size: 16px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  animation: example 15s linear infinite;
+}
+@keyframes example {
+  0% {
+    transform: translateX(1600px);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+@keyframes moves {
+  0% {
+    background-color: #fff;
+  }
+  10% {
+    background-color: pink;
+  }
+  30% {
+    background-color: green;
+  }
+  40% {
+    background-color: #000;
+  }
+  350% {
+    background-color: red;
+  }
+  60% {
+    background-color: yellow;
+  }
+  70% {
+    background-color: skyblue;
+  }
+  80% {
+    background-color: sienna;
+  }
+  90% {
+    background-color: slateblue;
+  }
+  100% {
+    background-color: purple;
+  }
+}
+textarea {
+  font-size: 18px !important;
+  font-weight: 400 !important;
+  line-height: 25px !important;
+  letter-spacing: .6px;
+  font-family: "PingFangTC 微软雅黑";
+}
+textarea::placeholder {
+  font-family: "PingFangTC 微软雅黑";
+  font-size: 18px !important;
+  font-weight: 400 !important;
+  color: #d3d3d3 !important;
+  line-height: 25px !important;
+  letter-spacing: .6px;
+}
+input {
+  font-family: "PingFangTC 微软雅黑";
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 25px;
+  letter-spacing: .6px;
+}
+input::placeholder {
+  font-family: "PingFangTC 微软雅黑";
+  font-size: 18px;
+  font-weight: 400;
+  color: #d3d3d3;
+  line-height: 25px;
+  letter-spacing: .6px;
+}
+#app {
+  width: 100%;
+}
+#app .header {
+  width: 100%;
+  height: 87px;
+  vertical-align: bottom;
+}
+#app .footer {
+  width: 100%;
+  height: 399px;
+  vertical-align: bottom;
+}
+.wrap {
+  width: 942px;
+  height: 100%;
+  margin: 87px auto 0;
+}
+.wrap .crumbs-wrap {
+  width: 100%;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #d8d8d8;
+  margin-bottom: 40px;
+}
+.wrap .crumbs-wrap p {
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 25px;
+  cursor: pointer;
+}
+.wrap .top-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  box-sizing: border-box;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #d8d8d8;
+}
+.wrap .top-wrap .item {
+  width: 50%;
+  height: 90px;
+  display: flex;
+  flex-direction: column;
+}
+.wrap .top-wrap .item .title {
+  font-size: 16px;
+  font-weight: 400;
+  color: #868686;
+  line-height: 22px;
+  margin-bottom: 12px;
+}
+.wrap .top-wrap .item .info {
+  max-width: 100%;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 22px;
+}
+.wrap .bottom-wrap {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 0 110px 0;
+}
+.wrap .bottom-wrap h3 {
+  display: inline-block;
+  margin: 47px 40px 80px 0;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 25px;
+}
+.wrap .bottom-wrap .content .input-wrap {
+  position: relative;
+  display: inline-block;
+  width: 453px;
+  height: 48px;
+}
+.wrap .bottom-wrap .content .input-wrap .label {
+  position: absolute;
+  top: -35px;
+  left: 0;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 26px;
+}
+.wrap .bottom-wrap .content .input-wrap input {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  border-radius: 6px;
+  outline: 1px solid #d2d2d2;
+  padding-left: 26px;
+  border: none;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 25px;
+}
+.wrap .bottom-wrap .content .input-wrap input:focus-visible {
+  outline: 2px solid #4d66ff;
+}
+.wrap .bottom-wrap .content .input-wrap input::placeholder {
+  font-size: 18px;
+  font-weight: 400;
+  color: #d3d3d3;
+  line-height: 25px;
+}
+.wrap .bottom-wrap .content .input-wrap.required .label::before {
+  display: inline-block;
+  content: "*";
+  color: red;
+  margin-right: 5px;
+}
+.wrap .bottom-wrap .content .wrap-one {
+  display: flex;
+  justify-content: space-between;
+}
+.wrap .bottom-wrap .content .wrap-two {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 60px;
+}
+.wrap .bottom-wrap .content .wrap-two .contact-number {
+  display: flex;
+  justify-content: space-between;
+}
+.wrap .bottom-wrap .content .wrap-two .contact-number input {
+  width: 327px;
+}
+.wrap .bottom-wrap .content .sales-wrap .row {
+  width: 100%;
+  margin-top: 60px;
+  display: flex;
+  justify-content: space-between;
+}
+.wrap .bottom-wrap .content .textarea {
+  margin-top: 60px;
+}
+.wrap .bottom-wrap .content .textarea .cooperation {
+  box-sizing: border-box;
+  padding-left: 16px;
+  padding-top: 13px;
+  width: 942px;
+  height: 110px;
+  background: #ffffff;
+  border-radius: 6px;
+  border: 1px solid #d2d2d2;
+  resize: none;
+  font-size: 16px;
+}
+.wrap .bottom-wrap .content .textarea .cooperation:focus-visible {
+  border: 1px solid transparent;
+  outline: 2px solid #4d66ff;
+}
+.wrap .bottom-wrap .content .textarea::placeholder {
+  font-size: 18px;
+  font-weight: 400;
+  color: #d3d3d3;
+  line-height: 25px;
+}
+.wrap .bottom-wrap .submit-button {
+  display: flex;
+  align-items: center;
+  margin-top: 36px;
+  width: 179px;
+  height: 40px;
+  background: #4d66ff;
+  border-radius: 20px;
+  box-sizing: border-box;
+  padding: 9px 60px;
+  line-height: 16px;
+  cursor: pointer;
+  text-align: center;
+}
+.wrap .bottom-wrap .submit-button span {
+  width: 100%;
+  font-size: 16px;
+  font-weight: 500;
+  color: #ffffff;
+  line-height: 20px;
+}
+.wrap *::placeholder {
+  font-size: 16px;
+  font-weight: 400;
+  color: #d3d3d3;
+  line-height: 22px;
+  margin-right: 16px;
+}
+.wrap .sales-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+span.error_warp {
+  font-size: 16px;
+}
+.errorDom {
+  border-color: red !important;
+  outline-color: red !important;
+}
+.select-wrap1 {
+  transform: translateY(40%);
+  width: 294px;
+  height: 40px;
+  display: inline-block;
+  position: relative;
+  z-index: 9999;
+  /* 里面的输入框 */
+  /* 箭头 */
+}
+.select-wrap1 .select_inner {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+  outline: 1px solid #ccc;
+  cursor: pointer;
+  transition: outline-color 0.2s;
+  border: none;
+  text-indent: 15px;
+  font-size: 18px;
+  letter-spacing: .669px;
+}
+.select-wrap1 .select_inner::placeholder {
+  font-size: 16px;
+  font-weight: 400;
+  color: #d3d3d3;
+  line-height: 22px;
+  text-indent: 15px;
+}
+.select-wrap1 .select_inner:focus ~ .icon::after {
+  content: "";
+  transform: translateY(-50%) rotate(-90deg);
+}
+.select-wrap1 .select_inner:focus ~ .select-item-wrap {
+  max-height: 999px;
+  background-color: #fff;
+}
+.select-wrap1 .select_inner:focus ~ .select-item-wrap li {
+  height: 57px;
+}
+.select-wrap1 .select_inner:focus ~ .select-item-wrap::before {
+  opacity: 1;
+}
+.select-wrap1 .select-item-wrap {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 54px;
+  left: 50%;
+  z-index: 99;
+  transform: translateX(-50%);
+  width: 100%;
+  max-height: 0;
+  list-style: none;
+  box-shadow: 0 0px 2px 0px rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  transition: all 0.3s 0.1s;
+  padding: 0px 0;
+  overflow-y: hidden;
+}
+.select-wrap1 .select-item-wrap li {
+  width: 100%;
+  height: 0;
+  text-indent: 64px;
+  transition: height 0.2s 0.1s;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+.select-wrap1 .select-item-wrap li.active span::before {
+  content: "";
+  background: url("../../../static/select.png") no-repeat 0 0 / 100% 100%;
+  position: absolute;
+  left: 20px;
+  width: 24px;
+  height: 24px;
+}
+.select-wrap1 .select-item-wrap li:hover {
+  background: #4d66ff;
+}
+.select-wrap1 .select-item-wrap li:hover span {
+  color: #fff;
+}
+.select-wrap1 .select-item-wrap li:hover span::before {
+  content: "";
+  background: url("../../../static/select-active.png") no-repeat 0 0 / 100% 100%;
+}
+.select-wrap1 .select-item-wrap li:hover span.active {
+  color: #fff;
+}
+.select-wrap1 .select-item-wrap li span {
+  position: relative;
+  font-size: 16px;
+  white-space: nowrap;
+}
+.select-wrap1 .icon::after {
+  content: "";
+  position: absolute;
+  transition: all 0.3s;
+  top: 50%;
+  z-index: 999;
+  right: 10px;
+  background: url("../../../static/more-balck.png") 0 0 / 100% 100%;
+  width: 14px;
+  height: 14px;
+  transform: translateY(-50%) rotate(90deg);
+  opacity: 0.7;
+  pointer-events: none;
+}
+.select-wrap2 {
+  width: 110px;
+  height: 48px;
+  display: inline-block;
+  position: relative;
+  z-index: 99;
+  /* 里面的输入框 */
+  /* 箭头 */
+}
+.select-wrap2 .select_inner {
+  padding-left: 0 !important;
+  position: absolute;
+  width: 100% !important;
+  height: 100%;
+  z-index: 9999;
+  border-radius: 6px;
+  outline: 1px solid #ccc;
+  cursor: pointer;
+  transition: outline-color 0.2s;
+  border: none;
+  text-indent: 15px;
+  overflow-x: hidden;
+  /* 点击时候 */
+}
+.select-wrap2 .select_inner::placeholder {
+  font-size: 16px;
+  font-weight: 400;
+  color: #d3d3d3;
+  line-height: 22px;
+  text-indent: 15px;
+}
+.select-wrap2 .select_inner:focus-visible {
+  outline: 1px solid #d2d2d2 !important;
+}
+.select-wrap2 .select_inner:focus {
+  overflow-x: hidden;
+}
+.select-wrap2 .select_inner:focus ~ .icon::after {
+  content: "";
+  transform: translateY(-50%) rotate(-90deg);
+}
+.select-wrap2 .select_inner:focus ~ .select-item-wrap {
+  max-height: 122px;
+  overflow-y: auto;
+  background-color: #fff;
+  overflow-x: hidden;
+}
+.select-wrap2 .select_inner:focus ~ .select-item-wrap::-webkit-scrollbar {
+  width: 8px;
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+.select-wrap2 .select_inner:focus ~ .select-item-wrap::-webkit-scrollbar-thumb {
+  width: 8px;
+  background: #bbbbbb;
+  border-radius: 4px;
+}
+.select-wrap2 .select_inner:focus ~ .select-item-wrap li {
+  height: 34px;
+  overflow-x: hidden;
+}
+.select-wrap2 .select_inner:focus ~ .select-item-wrap::before {
+  opacity: 1;
+}
+.select-wrap2 .select-item-wrap {
+  box-sizing: border-box;
+  position: absolute;
+  top: 54px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  list-style: none;
+  box-shadow: 0 0px 2px 0px rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  transition: all 0.3s 0.1s;
+  max-height: 0;
+  overflow: hidden;
+}
+.select-wrap2 .select-item-wrap li {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 0;
+  text-indent: 20px;
+  transition: height 0.2s 0.1s;
+  cursor: pointer;
+}
+.select-wrap2 .select-item-wrap li:hover {
+  background: #f5f7fa;
+}
+.select-wrap2 .select-item-wrap li:hover span {
+  color: #000;
+}
+.select-wrap2 .select-item-wrap li.active span {
+  color: #409eff;
+}
+.select-wrap2 .select-item-wrap li span {
+  font-size: 16px;
+  white-space: nowrap;
+}
+.select-wrap2 .icon::after {
+  content: "";
+  position: absolute;
+  transition: all 0.3s;
+  top: 50%;
+  right: 10px;
+  background: url("../../../static/more-balck.png") 0 0 / 100% 100%;
+  width: 14px;
+  height: 14px;
+  transform: translateY(-50%) rotate(90deg);
+  opacity: 0.7;
+  pointer-events: none;
+}

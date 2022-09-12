@@ -1,0 +1,153 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsMiner-Offical Website | Contact US | WhatsMiner M50S,WhatsMiner M53,WhatsMiner M33S++</title>
+    <meta name="keywords" content="MicroBT WhatsMiner M50,MicroBT WhatsMiner M30S,WhatsMiner Tool">
+    <meta name="description" content="For the WhatsMiner purchase, please contact Sales@MicroBT.com. For technical support, please contact Support@MicroBT.com. Leading in the ASIC miner industry.">
+    <!-- <link
+      rel="stylesheet"
+      media="screen and (min-width:0px) and (max-width:750px)"
+      href="./css/contact_750.css"
+    /> -->
+    <link rel="stylesheet" class="link" href="css\contact.css?v=2.020220805">
+    <link rel="icon" type="image/png" sizes="32x32" href="..\..\static\favicon.ico">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-227533464-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "UA-227533464-1");
+    </script>
+  </head>
+
+  <body>
+    <div id="app">
+      <iframe v-cloak="" src="..\..\public\views\header.html" frameborder="0" class="header" id="header"></iframe>
+      <div class="message-wrap" v-cloak="" v-if="bannerInfo && bannerInfo.status == 1 && bannerInfo.streamerType == 0 && !isCloseMsg" ref="imgClose">
+        <img src="..\..\static\icon\horn-active.png" alt="horn" class="horn">
+        <div class="animate_set">
+          <span class="message">{{isEn? bannerInfo.contentEn : bannerInfo.contentZh}}</span>
+        </div>
+        <img src="..\..\static\close-button.png" alt="close" @click="close" class="close-button">
+      </div>
+      <main class="wrap common" v-cloak="">
+        <!-- 面包屑的容器 -->
+        <div class="crumbs-wrap">
+          <p>{{isEn? `Contact us` : `联系我们`}}</p>
+        </div>
+        <!-- 上面部分的容器 -->
+        <div class="top-wrap" v-if="contactInfoData.length">
+          <div class="item" v-for="item in contactInfoData">
+            <span class="title">{{isEn? item.positionEn : item.positionZh}}</span>
+            <span class="info">{{isEn? item.contactEn : item.contactZh}}</span>
+          </div>
+        </div>
+        <!-- 下面部分的容器 -->
+        <div class="bottom-wrap">
+          <!-- 合作协商的文字 -->
+          <h3 class="cooperation-consultation">{{isEn? `Inquiry` : `合作`}}</h3>
+          <!-- 下拉按钮 -->
+          <div class="select-wrap1">
+            <input type="text" class="select_inner show" :placeholder="isEn? `Please select` :`请选择`" readonly="readonly">
+            <input type="hidden" class="select_inner hide" v-model="dataForm.type">
+            <div class="icon"></div>
+            <ul class="select-item-wrap">
+              <li class="select-item" :data-value="item.value" v-for="item in options" :key="item.value">
+                <span>{{item.label}}</span>
+              </li>
+            </ul>
+          </div>
+          <!-- 输入框部分 -->
+          <div class="content">
+            <!-- 第一排 -->
+            <div class="wrap-one">
+              <!-- Name -->
+              <div class="input-wrap required">
+                <span class="label">{{isEn? `Name` : `姓名`}}</span>
+                <input type="text" :placeholder="isEn? `Please fill` : `请填写`" v-model="dataForm.name">
+              </div>
+              <!-- Corporate Name -->
+              <div class="input-wrap required">
+                <span class="label">{{isEn? `Organization` : `公司名称`}}</span>
+                <input type="text" :placeholder="isEn? `Please fill` : `请填写`" v-model="dataForm.corporateName">
+              </div>
+            </div>
+            <!-- 第二排 -->
+            <div class="wrap-two">
+              <!-- Email -->
+              <div class="input-wrap required">
+                <span class="label">{{isEn? `Email` : `邮箱`}}</span>
+                <input type="text" :placeholder="isEn? `Please fill` : `请填写`" class="email" v-model="dataForm.email">
+              </div>
+              <!-- Contact Number -->
+              <div class="input-wrap required contact-number">
+                <span class="label">{{isEn? `Phone Number` : `联系电话`}}</span>
+                <!-- 下拉选择框 -->
+                <div class="select-wrap2">
+                  <input type="text" class="select_inner" :placeholder="isEn? `Please select` :`请选择`" readonly="readonly">
+                  <input type="hidden" class="select_inner hide" v-model="dataForm.internationalDistrictNum">
+                  <div class="icon"></div>
+                  <ul class="select-item-wrap">
+                    <li class="select-item" :data-value="item.phonecode" v-for="item in internationalDistrictNum" :key="item.id">
+                      <span>{{item.phonecode}}</span>
+                    </li>
+                  </ul>
+                </div>
+                <input type="text" :placeholder="isEn? `Please fill` : `请填写`" v-model="dataForm.contactNumber">
+              </div>
+            </div>
+            <!-- 售前才显示 -->
+            <div class="sales-wrap" v-if="dataForm.type==1">
+              <div class="row">
+                <!-- Inquiry Product Model -->
+                <div class="input-wrap required">
+                  <span class="label">{{isEn? `Required Model` : `产品型号`}}</span>
+                  <input type="text" :placeholder="isEn? `Please fill` : `请填写`" v-model="dataForm.inquryProductModel">
+                </div>
+                <!-- Requirement -->
+                <div class="input-wrap required">
+                  <span class="label">{{isEn? `Quantity` : `数量`}}</span>
+                  <input type="text" :placeholder="isEn? `Please fill` : `请填写`" v-model="dataForm.requirement">
+                </div>
+              </div>
+              <div class="row">
+                <!-- Final Destination Country -->
+                <div class="input-wrap required">
+                  <span class="label">{{isEn? `Final Destination Country` : `最终目的地国家`}}</span>
+                  <input type="text" :placeholder="isEn? `Please fill` : `请填写`" v-model="dataForm.finalDestinationCountry">
+                </div>
+                <!-- Requirement -->
+                <div class="input-wrap required">
+                  <span class="label">{{isEn? `Expected Delivery Time` : `预期交货时间`}}</span>
+                  <input type="text" :placeholder="isEn? `Please fill` : `请填写`" v-model="dataForm.expectedDeliveryTime">
+                </div>
+              </div>
+            </div>
+            <!-- 文本域 -->
+            <!-- cooperation -->
+            <div class="input-wrap textarea">
+              <span class="label">{{isEn? `Message` : `详情`}}</span>
+              <textarea class="cooperation" v-model="dataForm.cooperationNeed" :placeholder="isEn? `We will reply to you as soon as we can and keep your information in private` : `我们将尽快回复您，也将会对您的信息保密`"></textarea>
+            </div>
+          </div>
+          <div class="submit-button" @click="submitForm">
+            <span>{{isEn? `Submit` : `提交`}}</span>
+          </div>
+        </div>
+      </main>
+      <iframe v-cloak="" src="..\..\public\views\footer.html" frameborder="0" class="footer" id="footer"></iframe>
+    </div>
+    <script src="..\..\public\js\vue.js"></script>
+    <script src="..\..\public\axios\dist\axios.min.js"></script>
+    <script src="..\..\public\js\request.js"></script>
+    <script src="..\utils\utils.js"></script>
+    <script src="js\contact.js?v=2.020220805"></script>
+  </body>
+</html>

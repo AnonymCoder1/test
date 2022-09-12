@@ -1,0 +1,220 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WhatsMiner</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="..\..\static\favicon.ico">
+  <link rel="stylesheet" class="link" href="..\..\public\css\element-ui.css">
+  <link rel="stylesheet" class="link" href="css\shoppingCart.css?v=2.020220805">
+  <link rel="stylesheet" class="links" href="">
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-227533464-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-227533464-1');
+  </script>
+</head>
+
+<body>
+  <div id="app">
+    <iframe v-cloak="" src="..\..\public\views\header.html" frameborder="0" class="header" id="header"></iframe>
+    <div class="message-wrap" v-cloak="" v-if="bannerInfo && bannerInfo.status == 1 && bannerInfo.streamerType == 0 && !isCloseMsg" ref="imgClose">
+      <img src="..\..\static\icon\horn-active.png" alt="horn" class="horn">
+      <div class="animate_set">
+        <span class="message">{{isEn? bannerInfo.contentEn : bannerInfo.contentZh}}</span>
+      </div>
+      <img src="..\..\static\close-button.png" alt="close" @click="close" class="close-button">
+    </div>
+    <div class="main" v-cloak="">
+      <div class="main-title">{{isEn? `Cart` : `购物车`}}</div>
+      <div class="main-cart" v-if="cartDetails.length>0">
+        <!-- 购物车表头 -->
+        <div class="cart-header">
+          <p>{{isEn? `Commodity` : `商品`}}</p>
+          <p>{{isEn?`Price` : `价格`}}</p>
+          <p>{{isEn? `Quantity` : `数量`}}</p>
+          <p>{{isEn? `Subtotal` : `小计`}}</p>
+        </div>
+        <!-- 购物车订单内容 -->
+        <div class="cart-content">
+          <!-- 单个订单详情 -->
+          <div class="cart-order-item" v-for="o in cartDetails">
+            <div class="cart-order-item-top">
+              <div class="order-commodity">
+                <div class="checkbox">
+                  <el-checkbox v-model="o.checked" size="large"></el-checkbox> &nbsp;
+                </div>
+                <div class="order-info">
+                  <div class="order-info-top">
+                    <img :src="o.product.picturesEn" class="product_img" :alt='o.product.altsStr.split(",")[o.product.picturesCn.split(",").indexOf(o.product.picturesEn)]'>
+                      <div class="order-subtotal-content">  
+                        <p>{{o.product.nameCn+" "+o.spec.hashrate+"T "+o.spec.powerratio}}</p>
+                        <div class="order-subtotal-total">${{(o.spec.priceEn*o.cnt).toFixed(1)}}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="order-price">${{o.spec.priceEn}}</div>
+              <div class="order-quantity">
+                <el-input-number v-model="o.cnt" :min="1" @change="updateCart(o)" :max="o.spec.buyLimit==1?o.spec.buyLimitNum:99999"></el-input-number>
+              </div>
+              <div class="order-subtotal">${{(o.spec.priceEn*o.cnt).toFixed(1)}}</div>
+              <div><i class="el-icon-delete" @click="deleteCart(o)"></i></div>
+            </div>
+
+          </div>
+
+
+        </div>
+        <div class="other-express"> 
+          <!-- <el-radio v-model="modeTransport" label="1" disabled>UPS</el-radio> -->
+          <el-radio v-model="modeTransport" label="2">Other Express</el-radio>
+        </div>
+        <!-- 购物车结算 -->
+        <div class="cart-settlement">
+          <div class="settlement-detail">
+            <div class="detail-price">
+              <p>{{isEn? `Total goods:` : `商品总数：`}}</p>
+              <p>${{totalFee.toFixed(1)}}</p>
+            </div>
+            <div class="detail-price">
+              <p>{{isEn? `Delivery Fee:` : `运费：`}}</p>
+              <p>${{freightCost.toFixed(1)}}</p>
+            </div>
+            <!-- <div class="detail-price">
+              <p>{{isEn? `Coupon deduction:` : `优惠券扣减：`}}</p>
+              <p>$89,899</p>
+            </div> -->
+            
+            <div class="detail-price">
+              <p>{{isEn? `VIP offer:` : `VIP优惠:`}}</p>
+              <p>-${{vipDiscount}}</p>
+            </div>
+
+            <div class="detail-price detail-payable-phone">
+              <p>{{isEn? `Amount payable:` : `应付金额：`}}</p>
+              <p>${{finalFee}}</p>
+            </div>
+          </div>
+        </div>
+        <!-- 结算综合 -->
+        <div class="total">
+          <div class="total-position">
+            <div class="detail">
+              <p>{{isEn? `Amount payable:` : `应付金额：`}}</p>
+              <p>${{finalFee.toFixed(1)}}</p>
+            </div>
+          </div>
+        </div>
+        <!-- 提交按钮 -->
+        <div class="submit-btn">
+          <el-button class="buyNow" :disabled="selectedCart.length==0" type="primary" round="" @click="gotoOrderPage">{{$t("submit")}}</el-button>
+        </div>
+      </div>
+      <!-- 购物车为空 -->
+      <div class="empty" v-else="">
+        <p class="text">{{isEn? `Your Shopping Cart is Empty` : `你的购物车是空的`}}</p>
+        <div class="button" @click="To(`./products.html`)">{{isEn? `Shop Now` : `现在购买`}}</div>
+      </div>
+      <el-dialog title="Choose Address" :visible.sync="addressVisible" width="70%">
+        <div>
+          <el-table :data="addressList">
+            <el-table-column prop="id" width="30">
+              <el-radio :label="scope.row.id+''" v-model="selectedAddressId" slot-scope="scope"></el-radio>
+            </el-table-column>
+            <el-table-column prop="userName" label="Recipient name"></el-table-column>
+            <el-table-column prop="userPhone" label="Contact information"></el-table-column>
+            <el-table-column prop="zipCode" label="Postcode/Zip"></el-table-column>
+            <el-table-column label="Recipient address">
+              <template slot-scope="scope">
+                {{scope.row.countryName+"/"+scope.row.provinceName+"/"+scope.row.cityName}}
+              </template>
+            </el-table-column>
+            <el-table-column prop="detailedAddress" label="Address line1"></el-table-column>
+            <el-table-column prop="detailedAddressAlt" label="Address line2"></el-table-column>
+
+          </el-table>
+        </div>
+        <div slot="footer">
+          <el-button type="primary" :disabled="!selectedAddressId" @click="confirmAddress">Confirm</el-button>
+          <el-button type="default" class="button-dialog" @click="addressVisible=false">Cancel</el-button>
+        </div>
+      </el-dialog>
+
+      <el-dialog :visible.sync="termVisible" class="conditions-dialog" title="Terms and Conditions">
+        <div>
+          <div class="conditions-content">
+            {{merchantInfo.terms}}
+          </div>
+          <br>
+          <el-checkbox v-model="agreeTerm">I have read and accepted WhatsMiner Sale’s Policy and Terms.</el-checkbox>
+        </div>
+        <div slot="footer">
+          <el-button type="primary" :disabled="!agreeTerm" @click="termAgreed">Confirm
+          </el-button>
+          <el-button type="default" class="button-dialog" @click="termVisible=false">Cancel</el-button>
+        </div>
+      </el-dialog>
+
+
+      <el-dialog title="Please fill in contract information" :visible.sync="contractVisible" class="conditions-dialog" :close-on-click-modal="false">
+        <p class="information-tltle">The payer needs to be consistent with the purchaser of the contract. Once issued, it cannot be reopened for reasons other than our company. Please fill in carefully.</p>
+        <div>
+          <el-form ref="contractForm" :model="contract" :rules="contractRules">
+            <el-form-item label="Buyer" prop="buyer">
+              <el-input v-model="contract.buyer"></el-input>
+            </el-form-item>
+            <el-form-item label="Contact" prop="contact">
+              <el-input v-model="contract.contact"></el-input>
+            </el-form-item>
+            <el-form-item label="Phone Number" prop="phone">
+              <el-input v-model="contract.phone"></el-input>
+            </el-form-item>
+            <el-form-item label="Email" prop="email">
+              <el-input v-model="contract.email"></el-input>
+            </el-form-item>
+          </el-form>
+          <div class="agreement-clause">
+            <span class="user-agreement user-information">Note: the subject of the payment account must be
+              consistent with the contract subject filled in here</span>
+          </div>
+        </div>
+        <div slot="footer">
+          <el-button type="primary" :disabled="!contractOK" @click="submitOrder">Confirm</el-button>
+          <el-button type="default" class="button-dialog" @click="contractVisible">Cancel</el-button>
+        </div>
+      </el-dialog>
+      
+    </div>
+
+
+    <iframe v-cloak="" src="..\..\public\views\footer.html" frameborder="0" class="footer" id="footer"></iframe>
+  </div>
+  <script src="..\..\public\js\vue.js"></script>
+  <script src="..\..\public\js\vue-i18n.js"></script>
+  <script src="..\..\public\js\element-ui.js"></script>
+  <script src="..\..\public\axios\dist\axios.min.js"></script>
+  <script src="..\..\public\js\request.js"></script>
+  <script src="js\i18n.js"></script>
+  <script src="js\loginCheck.js"></script>
+  <script src="js\shoppingCart.js"></script>
+</body>
+<style>
+  .label::before{
+    content:"*";
+    color:red;
+  }
+  .label{
+    display: inline-block;
+    line-height: 40px;
+    padding-left:12px;
+  }
+</style>
+
+</html>

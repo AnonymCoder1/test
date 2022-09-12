@@ -1,0 +1,362 @@
+@import "../../../public/css/rem.css";
+* {
+  padding: 0;
+  margin: 0;
+}
+#app {
+  width: 100%;
+}
+#app .header {
+  width: 100%;
+  height: 2.9333rem;
+  vertical-align: top;
+}
+#app .footer {
+  width: 100%;
+  height: 13.3333rem;
+  vertical-align: top;
+}
+.top {
+  width: 100%;
+  height: 7rem;
+  background: #f0f1f5;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  margin-top: 2.9333rem;
+}
+.top .title {
+  font-size: 0.9333rem;
+  font-weight: 500;
+  line-height: 1.3333rem;
+}
+.top span {
+  font-size: 0.5333rem;
+  font-weight: 400;
+  color: #6e6e73;
+  line-height: 0.7333rem;
+}
+.wrap {
+  width: 42.2667rem;
+  margin: 0 auto;
+}
+.wrap > h3 {
+  margin-bottom: 0.8rem;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 400;
+  line-height: 1.1rem;
+}
+.wrap .search-wrap {
+  margin: 0 auto;
+  width: 20.5333rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.wrap .search-wrap .isEN_box {
+  display: none;
+}
+.wrap .search-wrap .search {
+  position: relative;
+  width: 20.5333rem;
+  height: 1.6rem;
+  margin-bottom: 0.5333rem;
+}
+.wrap .search-wrap .search input {
+  box-sizing: border-box;
+  padding-left: 0.5667rem;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  border-radius: 0.2rem;
+  border: 0.0333rem solid #d2d2d2;
+  font-size: 0.6rem;
+  font-weight: 400;
+  line-height: 0.8333rem;
+}
+.wrap .search-wrap .search input:focus {
+  outline-color: #4d66ff;
+}
+.wrap .search-wrap .search input::placeholder {
+  font-size: 0.6rem;
+  font-weight: 400;
+  color: #d3d3d3;
+  line-height: 0.8333rem;
+}
+.wrap .search-wrap .search > img {
+  cursor: pointer;
+  position: absolute;
+  top: 18%;
+  right: 0.2667rem;
+  width: 1.0667rem;
+  height: 1.0667rem;
+}
+.wrap .search-wrap .result-list-wrap {
+  width: 100%;
+  height: 100%;
+  background: #f5f6fa;
+  border-radius: 0.2rem;
+}
+.wrap .search-wrap .result-list-wrap ul li {
+  box-sizing: border-box;
+  padding: 0.8rem;
+  list-style: none;
+  font-size: 0.6rem;
+  line-height: 0.8667rem;
+  cursor: pointer;
+}
+.wrap .search-wrap .result-list-wrap ul li a {
+  text-decoration: none;
+  color: #000;
+}
+.wrap .support-wrap {
+  margin-top: 0.9333rem;
+  width: 100%;
+  height: 7.2667rem;
+  display: flex;
+  justify-content: space-between;
+}
+.wrap .support-wrap .support-item {
+  box-sizing: border-box;
+  padding: 1.3333rem 1.6rem;
+  width: 20.5333rem;
+  height: 7.2667rem;
+  background: #f5f6fa;
+  border-radius: 0.2rem;
+}
+.wrap .support-wrap .support-item h3 {
+  margin-bottom: 0.4667rem;
+  max-width: 16.6667rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.6rem;
+  font-weight: 500;
+  line-height: 0.8333rem;
+}
+.wrap .support-wrap .support-item span {
+  font-size: 0.5333rem;
+  font-weight: 400;
+  color: #6e6e73;
+  line-height: 0.8667rem;
+  max-width: 16.6667rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.wrap .support-wrap .support-item .support-bottom-wrap {
+  margin-top: 1.0667rem;
+  width: 100%;
+  height: 1.3333rem;
+  display: flex;
+  justify-content: space-between;
+}
+.wrap .support-wrap .support-item .support-bottom-wrap a {
+  max-width: 10rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+.wrap .support-wrap .support-item .support-bottom-wrap a img {
+  width: 0.5333rem;
+  height: 0.5333rem;
+  margin-right: 0.1667rem;
+}
+.wrap .support-wrap .support-item .support-bottom-wrap a span {
+  vertical-align: top;
+  font-size: 0.5333rem;
+  font-weight: 400;
+  color: #4d66ff;
+  line-height: 0.7333rem;
+}
+.wrap .support-wrap .support-item .support-bottom-wrap div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 0.6667rem;
+  border: 0.0333rem solid #000000;
+  padding: 0.3333rem 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.wrap .support-wrap .support-item .support-bottom-wrap div span {
+  font-size: 0.4667rem;
+  line-height: 0.6667rem;
+  color: inherit;
+}
+.wrap .support-wrap .support-item .support-bottom-wrap div img {
+  width: 0.5333rem;
+  height: 0.5333rem;
+}
+.wrap .support-wrap .support-item .support-bottom-wrap div .active-icon {
+  display: none;
+}
+.wrap .support-wrap .support-item .support-bottom-wrap div:hover {
+  background-color: #4d66ff;
+  border-color: #4d66ff;
+  color: #fff;
+}
+.wrap .support-wrap .support-item .support-bottom-wrap div:hover .active-icon {
+  display: block;
+}
+.wrap .support-wrap .support-item .support-bottom-wrap div:hover .normal-icon {
+  display: none;
+}
+.wrap .bottom-wrap {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.2333rem;
+  width: 100%;
+  height: 6rem;
+  margin-bottom: 3.6667rem;
+}
+.wrap .bottom-wrap .bottom-item {
+  transition: all 0.5s;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 1.4333rem 2.4rem;
+  width: 9.6667rem;
+  height: 6rem;
+  background: #f5f6fa;
+  border-radius: 0.2rem;
+  cursor: pointer;
+  text-decoration: none;
+  color: #000;
+}
+.wrap .bottom-wrap .bottom-item img.active {
+  display: none;
+}
+.wrap .bottom-wrap .bottom-item img {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+.wrap .bottom-wrap .bottom-item span {
+  min-width: 7.6667rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.6rem;
+  font-weight: 400;
+  line-height: 0.8333rem;
+}
+.wrap .bottom-wrap .bottom-item:hover {
+  background: #4d66ff;
+}
+.wrap .bottom-wrap .bottom-item:hover span {
+  color: #fff;
+}
+.wrap .bottom-wrap .bottom-item:hover .normal {
+  display: none;
+}
+.wrap .bottom-wrap .bottom-item:hover .active {
+  display: block;
+}
+.wrap .bottom-wrap .bottom-item.disabled img,
+.wrap .bottom-wrap .bottom-item.disabled span {
+  opacity: 0.1;
+  user-select: none;
+}
+.wrap .bottom-wrap .bottom-item.disabled:hover {
+  background: #f5f6fa;
+  cursor: not-allowed;
+}
+.wrap .bottom-wrap .bottom-item.disabled:hover span {
+  color: #000;
+}
+.wrap .bottom-wrap .bottom-item.disabled:hover .normal {
+  display: block;
+}
+.wrap .bottom-wrap .bottom-item.disabled:hover .active {
+  display: none;
+}
+.repair-guide-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.76);
+}
+.repair-guide-wrap .main-wrap {
+  position: relative;
+  width: 27.7667rem;
+  background: #ffffff;
+  border-radius: 0.2rem;
+  box-sizing: border-box;
+  padding: 2.1rem 2.6667rem;
+}
+.repair-guide-wrap .main-wrap .close-button {
+  position: absolute;
+  top: 0.4667rem;
+  right: 0.4667rem;
+  width: 1.3333rem;
+  height: 1.3333rem;
+  cursor: pointer;
+}
+.repair-guide-wrap .main-wrap h3 {
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1.1rem;
+}
+.repair-guide-wrap .main-wrap .content {
+  margin-top: 1.2rem;
+  width: 100%;
+  height: 13.1rem;
+  font-size: 0.5333rem;
+  font-weight: 400;
+  line-height: 0.7333rem;
+  overflow: auto;
+}
+.repair-guide-wrap .main-wrap .content::-webkit-scrollbar {
+  width: 0.2667rem;
+  background: #f1f1f1;
+  border-radius: 0.1333rem;
+}
+.repair-guide-wrap .main-wrap .content::-webkit-scrollbar-thumb {
+  width: 0.2667rem;
+  background: #bbbbbb;
+  border-radius: 0.1333rem;
+}
+.购买配件 .main-wrap {
+  width: 833px;
+  height: unset;
+  max-height: 586px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-sizing: border-box;
+  padding: 40px 14px 50px 50px;
+}
+.购买配件 .main-wrap .content {
+  margin-top: 16px;
+  height: unset;
+  max-height: 368px;
+}
+.购买配件 .main-wrap .confirm {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 179px;
+  height: 40px;
+  background: #4d66ff;
+  border-radius: 20px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #ffffff;
+  line-height: 22px;
+  cursor: pointer;
+}

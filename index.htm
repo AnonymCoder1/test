@@ -1,0 +1,282 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WhatsMiner Offical Website | whatsminer.com</title>
+  <meta name="keywords" content="MicroBT,WhatsMiner,ASIC Miner,WhatsMiner Mining Hardware">
+    <meta name="description" content="WhatsMiner is a leading brand of mining hardware and chip design developed by MicroBT. WhatsMiner is widely used in retail and institutional mining by customers around the world.">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" class="link" href="src\views\css\index.css?v=20220826">
+    <link rel="icon" type="image/png" sizes="32x32" href="static\favicon.ico">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-227533464-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "UA-227533464-1");
+    </script>
+  </head>
+
+<body>
+  <!-- 全局容器 -->
+  <div class="container-fluid" id="app">
+    <!-- 顶部导航栏 -->
+    <iframe src="public\views\header.html" v-cloak="" frameborder="0" class="header" width="100vw" id="header"></iframe>
+    <!-- <head-box></head-box> -->
+    <!-- 英文 -->
+    <div class="wrap" v-cloak="" v-show="isEn && bannerEnData.length">
+      <!-- 视频里面的文字 -->
+      <h3 class="video_text" v-if="(bannerEnData[0] && bannerEnData[0].type) && (bannerEnData[0] && bannerEnData[0].type == 2)">
+        {{bannerEnData[0].homeText}}</h3>
+      <!-- 有横幅消息的时候显示英文版横幅-->
+      <div class="message-wrap" v-if="bannerInfo && bannerInfo.status == 1 && !isCloseMsg" ref="imgClose1">
+        <img src="src\assets\img\horn.png" class="horn" alt="horn">
+        <div class="animate_set">
+          <span class="message">{{bannerInfo.contentEn}} </span>
+        </div>
+        <img src="static\close-button.png" alt="close" @click="close" class="close-button">
+      </div>
+      <!-- 封面图 -->
+      <!-- 如果数据的类型是视频 -->
+      <img :src="bannerEnData[0] && bannerEnData[0].videoWebCoverUrl" class="video-cover" v-show="(bannerEnData[0] && bannerEnData[0].type) && (bannerEnData[0] && bannerEnData[0].type == 2)" alt="video-cover">    
+      <video class="video" autoplay="" muted="" loop="" playsinline="" :src="bannerEnData[0].webUrl" v-if="bannerEnData[0] && bannerEnData[0].type && (bannerEnData[0] && bannerEnData[0].type == 2)" @canplay="videoOk">
+        <source :src=" mobileType == 1 ? (bannerEnData[0] && bannerEnData[0].webUrl) : (bannerEnData[0] && bannerEnData[0].mobileUrl)" type="video/mp4">
+        当前浏览器不支持
+      </video>
+      <!-- 轮播图 -->
+      <div class="swiper" v-else="">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide" v-for="(item,index) in bannerEnData" :key="item.id">
+            <a :href="item.linkUrl" target="_blank">
+              <img :src="mobileType == 1 ? item.webUrl : item.mobileUrl" class="swipe" :alt="mobileType == 1 ? item.pcBgAlt : item.mobileBgAlt"> 
+            </a>
+          </div>
+        </div>
+        <div class="swiper-pagination"></div>
+        <img src="static\prev.png" alt="swiper-button-prev" class="swiper-button-prev">
+        <img src="static\next.png" alt="swiper-button-next" class="swiper-button-next">
+      </div>
+      
+     
+    </div>
+    <!-- 中文 -->
+    <div class="wrap" v-cloak="" v-show="!isEn && bannerZhData.length">
+      <!-- 视频里面的文字 -->
+      <h3 class="video_text" v-if="bannerZhData[0] && bannerZhData[0].type && bannerZhData[0].type === 2">
+        {{bannerZhData[0].homeText}}</h3>
+      <div class="message-wrap" v-if="bannerInfo && bannerInfo.status == 1  && !isCloseMsg" ref="imgClose2">
+        <img src="src\assets\img\horn.png" alt="horn" class="horn">
+        <div class="animate_set">
+          <span class="message">{{bannerInfo.contentZh}} </span>
+        </div>
+        <img src="static\close-button.png" alt="close" @click="close2" class="close-button">
+      </div>
+      <img :src="bannerZhData[0].videoWebCoverUrl" class="video-cover" v-if="bannerZhData[0] && bannerZhData[0].type && bannerZhData[0].type === 2">
+      <video class="video" autoplay="" muted="" loop="" :src="bannerZhData[0].webUrl" playsinline="" v-if="bannerZhData[0] && bannerZhData[0].type && bannerZhData[0].type == 2" @canplay="videoOk">
+        <source :src="mobileType == 1 ? bannerZhData[0].webUrl : bannerZhData[0].mobileUrl" type="video/mp4">
+        当前浏览器不支持
+      </video>
+      <!-- 轮播图 -->
+      <div class="swiper" v-else="">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide" v-for="(item,index) in bannerZhData" :key="item.id">
+            <a :href="item.linkUrl" target="_blank">
+              <img :src="mobileType == 1 ? item.webUrl : item.mobileUrl" class="swipe">
+            </a>
+          </div>
+        </div>
+        <div class="swiper-pagination"></div>
+        <img src="static\prev.png" alt="swiper-button-prev" class="swiper-button-prev">
+        <img src="static\next.png" alt="swiper-button-next" class="swiper-button-next">
+      </div>
+    </div>
+    <!-- banner图 -->
+    <div class="common-pic">
+    <div class="banner-wrap common" v-cloak="" v-if="!!data.length" id="banner-wrap" ref="banner">
+      <!-- 左边部分 -->
+      <div class="banner-item active" @mouseenter="bannerHover($event,'left')" v-show="(data[0] && data[0].picEn) || (data[0] && data[0].picZh)">
+        <!-- 左边部分的描述 -->
+        <div class="banner-one-disc">
+          <h3>{{isEn? data[0].titleEn : data[0] && data[0].titleZh}}</h3>
+          <span>{{isEn? data[0] && data[0].introductionEn :data[0] && data[0].introductionZh}}</span>
+          <a href="src\views\product.html"><span>{{isEn? "Learn more" : '查看详情'}} <img src="static\more-blue.png" alt="more-blue"></span></a>
+        </div>
+        
+        <img :src="isEn? data[0] && data[0].picEn : data[0] && data[0].picZh" class="banner1" :alt="isEn?data[0]?.enAlt :data[0]?.zhAlt">
+        <img :src="isEn? (coreAdvantageStatic_phone[0] && coreAdvantageStatic_phone[0].picMoveEn || '')  : (coreAdvantageStatic_phone[0] && coreAdvantageStatic_phone[0].picMoveZh || '')" class="banner1_phone">
+      </div>
+      <!-- 右边部分 -->
+      <div class="banner-item" @mouseenter="bannerHover($event,'right')">
+        <!-- pc端未激活状态 -->
+        <!-- <h3 class="title">{{isEn? data[1] && data[1].titleEn : data[1] && data[1].titleZh}}</h3> -->
+        <h3 class="title"></h3>
+        <!-- pc端激活状态 -->
+        <h3 class="title2">{{isEn? data[1] && data[1].titleEn : data[1] && data[1].titleZh}}</h3>
+        <!-- 移动端 -->
+        <h3 class="title3">{{isEn? data[1] && data[1].titleEn : data[1] && data[1].titleZh}}</h3>
+        <!-- pc端 -->
+        <span class="disc">{{isEn? data[1] && data[1].introductionEn : data[1] && data[1].introductionZh}}</span>
+        <!-- 移动端 -->
+        <span class="disc2">{{isEn? data[1].introductionMoveEn : data[1].introductionMoveZh}}</span>
+        <!-- <span class="disc2">Advanced chip with 8Nm Technology</span> -->
+        <img :src="isEn? data[1].picEn : data[1].picZh" class="banner2" :alt="isEn?data[1]?.enAlt :data[1]?.zhAlt">
+        <img :src="isEn? coreAdvantageStatic_phone[1] && coreAdvantageStatic_phone[1].picMoveEn : (coreAdvantageStatic_phone[1] && coreAdvantageStatic_phone[1].picMoveZh)" class="banner2_phone">
+      </div>
+    </div>
+    <!-- learn more 模块 -->
+
+    <div class="learn-more common" v-cloak="">
+      <!-- learn more 模块的顶部 -->
+      <div class="learn-more-top" v-if="data.length">
+        <p class="small_p">
+          {{isEn? `We are the industry pioneer in full-custom design, and design the chip based on 5nm advanced process.` :
+            `全定制方法学业内领先，基于5nm先进工艺的芯片设计，精益求精，不断优化。`}}
+        </p>
+        <!-- pc端 -->
+        <a href="src\views\product.html" class="small"><span>{{isEn? `More Products` : `购物中心`}}</span><img src="static\more-balck.png" class="no-active"> <img src="static\more-white.png" class="active"></a>
+        <!-- 移动端 -->
+        <a href="src\views\product.html" class="mall"><span>{{isEn? `More Products` : `购物中心`}}</span><img src="static\more-balck.png"></a>
+      </div>
+      <!-- learn more 模块的中间 活动模块-->
+      <div class="learn-more-center">
+        <!-- 图片 -->
+        <img class="banner3" :src="isEn? data[2] && data[2].picEn : data[2] && data[2].picZh" v-if="isShowActive" :alt="isEn?data[2]?.enAlt :data[2]?.zhAlt">
+        <img :src="isEn? (coreAdvantageStatic_phone[2] && coreAdvantageStatic_phone[2].picMoveEn) : (coreAdvantageStatic_phone[2] && coreAdvantageStatic_phone[2].picMoveZh)" class="banner3_phone" v-if="isShowActive">
+        <!-- 文字部分 -->
+        <div class="banner-one" v-if="isShowActive">
+          <h3>{{isEn? data[2] && data[2].titleEn : data[2] && data[2].titleZh }}</h3>
+          <p v-text="isEn ? data[2] && data[2].introductionEn : data[2] && data[2].introductionZh"></p>
+          <a href="src\views\activity.html"><span>{{isEn? 'Learn more' : '了解更多'}}</span>
+            <img src="static\more-blue.png" alt="more-blue">
+          </a>
+        </div>
+        <!-- 两个banner图部分 -->
+        <div class="banner-tow">
+          <!-- 左边 -->
+          <div class="banner-tow-item">
+            <div class="banner-tow-item-top">
+              <h3>{{isEn? data[3] && data[3].titleEn : data[3] && data[3].titleZh }}</h3>
+              <span>{{isEn? data[3] && data[3].introductionEn : data[3] && data[3].introductionZh}}</span>
+              <a href="src\views\repair_process.html">{{isEn? 'Learn more' : '了解更多'}}<img src="static\more-blue.png" alt="more-blue"></a>
+            </div>
+            <img class="banner4" :src="isEn? data[3] && data[3].picEn : data[3] && data[3].picZh" alt="banner4" :alt="isEn?data[3]?.enAlt :data[3]?.zhAlt">
+            <img :src="isEn? coreAdvantageStatic_phone[3] && coreAdvantageStatic_phone[3].picMoveEn : (coreAdvantageStatic_phone[3] && coreAdvantageStatic_phone[3].picMoveZh)" alt="banner4_phone" class="banner4_phone">
+          </div>
+          <!-- 右边 -->
+          <div class="banner-tow-item">
+            <div class="banner-tow-item-top">
+              <h3>{{isEn? data[4] && data[4].titleEn : data[4] && data[4].titleZh }}</h3>
+              <!-- pc端 -->
+              <span>{{isEn? data[4] && data[4].introductionEn : data[4] && data[4].introductionZh}}</span>
+              <a href="src\views\firmware-download.html">{{isEn? 'Learn more' : '了解更多'}}<img src="static\more-blue.png" alt="more-blue"></a>
+            </div>
+            <img class="banner5" :src="isEn? data[4] && data[4].picEn : data[4] && data[4].picZh" :alt="isEn?data[4]?.enAlt :data[4]?.zhAlt">
+            <img :src="isEn? (coreAdvantageStatic_phone[4] && coreAdvantageStatic_phone[4].picMoveEn) : (coreAdvantageStatic_phone[4] && coreAdvantageStatic_phone[4].picMoveZh)" alt="banner5_phone" class="banner5_phone">
+          </div>
+        </div>
+      </div>
+      <!-- learn more 模块的底部 -->
+      <div class="learn-more-bottom">
+        <div class="learn-more-bottom-item">
+          <img src="src\assets\img\query.png" alt="query">
+          <span>{{isEn? 'Warrant Inquiry' : '保修查询'}}</span>
+          <a href="src\views\support.html"><span>{{isEn? 'Learn more' : '了解更多'}}</span><img src="static\more-blue.png" alt="more-blue"></a>
+        </div>
+        <div class="learn-more-bottom-item" :class="{disabled : isDisabledMoreSupport}">
+          <img src="src\assets\img\afterSale.png" alt="afterSale">
+          <span> {{isEn? `More Support` : '更多支持'}} </span>
+          <a v-if="!isDisabledMoreSupport" href="src\views\more_support.html"><span>{{isEn? 'Learn more' : '了解更多'}}</span><img src="static\more-blue.png" alt="more-blue"></a>
+        </div>
+       <div class="learn-more-bottom-item">
+            <img src="src\assets\img\contact.png" alt="contact">
+            <span> {{isEn? ' Contact Technical Specialist' : '联系技术专家'}} </span>
+            <a href="src\views\contact.html"><span>{{isEn? 'Learn more' : '了解更多'}}</span><img src="static\more-blue.png" alt="more-blue"></a>
+          </div>
+      </div>
+      <!-- 底部的news模块 -->
+      <div class="more-wrap common" v-if="newsData.length">
+        <div class="more-item" @click="toDynamic_detail(item)" v-for="item in newsData">
+          <a href="JavaScript:;">
+            <span> {{isEn? item && item.titleEn :item && item.titleZh}} </span>
+            <span class="date">{{item.releaseTime}}</span>
+            <a href="JavaScript:;" class="more">{{isEn? 'More' : '更多'}}
+              <img src="static\more-balck.png" alt="more-icon" class="more-icon">
+              <img src="src\assets\img\moreActive.png" alt="more-active" class="more-active">
+            </a>
+          
+        </div>
+      </div>
+      <div class="footer_more" @click="location">
+        <a href="JavaScript:;"><span>{{isEn? 'More' : '了解更多'}}</span>
+          <img src="static\more-balck.png" alt="more-balck">
+        </a>
+      </div>
+    </div>
+  </div>
+  
+    <!--  底部   -->
+    <iframe src="public\views\footer.html" v-cloak="" frameborder="0" class="footer" id="footer"></iframe>
+    <div class="tab_bar">
+      <a href="javascript:;" @click="toCurrent" class="tab_bar_item">
+        <img src="static\tab_bar_home2.png" alt="tab_bar_home2">
+      </a>
+      <a href="javascript:;" @click="toProduct" class="tab_bar_item">
+        <img src="static\tab_bar_product.png" alt="tab_bar_product">
+      </a>
+      <a href="src\views\support.html" class="tab_bar_item">
+        <img src="static\tab_bar_jishu2.png" alt="tab_bar_jishu2">
+      </a>
+      <a href="src\views\personal.html" class="tab_bar_item">
+        <img src="static\tab_bar_personal%20.png" alt="tab_bar_personal">
+      </a>
+    </div>
+  </div>
+</body>
+<!-- <script src="https://cdn.bootcss.com/vConsole/3.2.0/vconsole.min.js"></script>
+  <script>
+    let vConsole = new VConsole()
+  </script> -->
+<script src="public\js\vue.js"></script>
+<script src="public\axios\dist\axios.js"></script>
+<script src="public\js\request.js"></script>
+<script src="src\views\js\index.js"></script>
+<script src="src\utils\utils.js"></script>
+
+<!-- swipe的js -->
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script>
+  // function bannerHover() {
+  //   // this.className ='banner-item active';(this.nextElementSibling && this.nextElementSibling.className) = 'banner-item'
+  //   console.log(11);
+  // }
+  window.onload = function () {
+    // 轮播图
+    // TODO灵异事件不加定时器会不能无限轮播
+    setTimeout(function () {
+      let mySwiper = new Swiper(".swiper", {
+        autoplay: true,
+        autoHeight: true,
+        loop: true, // 循环模式选项
+        // 分页器
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+        //  前进后退按钮
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+      });
+    }, 1000);
+  };
+</script>
+
+</html>

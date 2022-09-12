@@ -1,0 +1,228 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsMiner</title>
+    <link rel="stylesheet" href="..\..\public\css\element-ui.css">
+    <link rel="stylesheet" class="link" href="css\personal-1.css">
+    <link rel="stylesheet" class="link" href="css\order_center.css">
+    <link rel="stylesheet" class="links" href="">
+    <link rel="stylesheet" href="..\utils\utils-1.css?v=2.020220805">
+    <!-- <link rel="icon" type="image/png" sizes="32x32" href="../../static/favicon.ico"> -->
+    <link rel="icon" type="image/png" sizes="32x32" href="..\..\static\favicon.ico">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-227533464-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-227533464-1');
+
+    </script>
+    <style>
+        /* 错误信息的样式 */
+        
+        .error_warp {
+            font-size: .533333rem;
+            margin-top: .066667rem;
+        }
+
+    </style>
+
+    <script src="..\..\public\js\vue.js"></script>
+</head>
+
+<body style="overflow:-Scroll;overflow-x:hidden">
+<div id="app">
+    <iframe v-cloak="" src="..\..\public\views\header.html" frameborder="0" class="header" id="header"></iframe>
+    <!-- 外层容器 -->
+    <div class="wrap" v-cloak="">
+        <!-- 左侧的导航栏 -->
+        <iframe v-pre="" src="..\..\public\views\nav-bar.html" frameborder="0" class="nav-bar" id="nav-bar"></iframe>
+        <!-- 内容区域的容器 -->
+        <main class="main">
+            <!-- 面包屑容器 -->
+            <div class="crumbs-wrap">
+                <a href="..\..\index.html">{{$t("HomePage")}}</a>
+                <span>{{$t("OrderCenter")}}</span>
+            </div>
+
+            <div class="order-center-title">{{$t("OrderCenter")}}</div>
+            <div class="order-type">
+                <el-tabs v-model="orderType">
+                    <el-tab-pane :label="$t('AllOrders')" name="100">
+                    </el-tab-pane>
+                    <el-tab-pane :label="$t('Paid')" name="1"></el-tab-pane>
+                    <el-tab-pane :label="$t('Completed')" name="2"></el-tab-pane>
+                    <el-tab-pane :label="$t('Cancelled')" name="-1"></el-tab-pane>
+                </el-tabs>
+                <el-select v-model="orderType" placeholder="请选择">
+                    <el-option :label="$t('AllOrders')" value="100"></el-option>
+                    <el-option :label="$t('Unpaid')" value="0"></el-option>
+                    <el-option :label="$t('Paid')" value="1"></el-option>
+                    <el-option :label="$t('Completed')" value="2"></el-option>
+                    <el-option :label="$t('Cancelled')" value="-1"></el-option>
+                  </el-select>
+            </div>
+            <div class="order-list">
+                <div class="order-item" v-for="order in curTypeOrders" :key="order.id" v-if="curTypeOrders.length>0">
+                    <div class="order-number">
+                        <span>No:{{orderNo(order)}}</span>
+                        <span class="created-time">{{fmtDate(order.createdAt)}}</span>
+                        <span></span>
+                        <!--未付款-->
+                        <div class="countdo" v-if="order.paymentState==0">
+                            {{$t('CancelOrdercountdown')}}
+                            <label>{{order.countdown}}</label>
+                            <div class="order-tips order-tips-wrong">{{$t('Unpaid')}}</div>
+                        </div>
+
+                        <div class="countdo" v-else="">
+                            <!--已取消-->
+                            <div class="order-tips order-tips-no" v-if="order.paymentState==-1">{{$t('Cancelled')}}</div>
+                            <div class="order-tips order-tips-no" v-if="order.paymentState==-2">{{$t('Refunded')}}</div>
+                            <!--待确认-->
+                            <div class="order-tips order-tips-ok" v-if="order.paymentState==1">{{$t('PaymentToBeXonfirmed')}}</div>
+                            <!--已确认-->
+                            <div class="order-tips order-tips-ok" v-if="order.paymentState==2&&order.deliveryState==0">
+                                {{$t('Unshipped')}}
+                            </div>
+                            <div class="order-tips order-tips-ok" v-if="order.paymentState==2&&order.deliveryState==1">
+                                {{$t('Shipped')}}
+                            </div>
+                            <div class="order-tips order-tips-no" v-if="order.paymentState==2&&order.deliveryState==2">
+                                {{$t('Completed')}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="order-detail" v-if="order.goodsDetailList.length>0">
+                        <div class="goods-detail-list">
+                        <div v-for="goods in order.goodsDetailList" class="goods-detail-item">
+                            <div class="order-pic"><img :src="goods.product.picturesEn"></div>
+                            <div class="order-desc">
+                                <span>{{tt(goods.product,"name")}}</span>
+                                <p><label>{{powerOnWall(goods.spec,goods.product)}}</label>
+                                </p>
+                                <div>$ {{goods.price}}<i>x{{goods.cnt}}</i>
+                                </div>
+                            </div>
+                        </div></div>
+                        <div class="order-total-mount">Total Amount
+                            <p>$ {{order.finalPrice}}</p>
+                        </div>
+                        <div class="order-operation">
+                            <div class="order-btn order-btn-primary" @click="toPay(order)" v-if="order.paymentState==0">
+                                {{$t('PayItNow')}}
+                            </div>
+                            <div class="order-btn" @click="checkMoreChange(order)">{{$t('CheckMoreDetails')}}</div>
+                            <div class="order-btn" @click="modifyOrder(order)" v-if="order.paymentState==0">{{$t('ModifyDetails')}}
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="order-number order-number-phone">
+                        <span>No:{{orderNo(order)}}</span>
+                        <!--未付款-->
+                        <div class="countdo" v-if="order.paymentState==0">
+                            <div class="order-tips order-tips-wrong">Unpaid</div>
+                        </div>
+                        <div class="countdo" v-else="">
+                            <!--已取消-->
+                            <div class="order-tips order-tips-no" v-if="order.paymentState==-1">{{$t('Cancelled')}}</div>
+                            <div class="order-tips order-tips-no" v-if="order.paymentState==-2">{{$t('Refunded')}}</div>
+                            <!--待确认-->
+                            <div class="order-tips order-tips-ok" v-if="order.paymentState==1">{{$t('PaymentToBeXonfirmed')}}
+                            </div>
+                            <!--已确认-->
+                            <div class="order-tips order-tips-ok" v-if="order.paymentState==2&&order.deliveryState==0">
+                                 {{$t('Unshipped')}}
+                            </div>
+                            <div class="order-tips order-tips-ok" v-if="order.paymentState==2&&order.deliveryState==1">
+                                 {{$t('Shipped')}}
+                            </div>
+                            <div class="order-tips order-tips-no" v-if="order.paymentState==2&&order.deliveryState==2">
+                                 {{$t('Completed')}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="order-detail order-detail-phone" v-if="order.goodsDetailList.length>0">
+                        <div class="order-pic">
+                            <img :src="order.goodsDetailList[0].product.picturesEn">
+                            <div class="order-desc">
+                                <span>{{tt(order.goodsDetailList[0].product,"name")}}</span>
+                                <label>{{powerOnWall(order.goodsDetailList[0].specification,order.goodsDetailList[0].product)}}</label>
+                                <div>$ {{order.goodsDetailList[0].spec?.priceEn}}<i>x{{order.goodsDetailList[0].cnt}}</i></div>
+                            </div>
+                        </div>
+                        <div class="countdo" v-if="order.paymentState==0">
+                            {{$t('CancelOrdercountdown')}}
+                            <label>{{order.countdown}}</label>
+                        </div>
+                        <div class="order-total-mount">
+                            <label><i>10</i>Days After Payment</label>
+                        </div>
+                        <div class="order-total-mount">
+                            <p>$ {{order.finalPrice}}</p>
+                        </div>
+                        <div class="order-operation">
+                            <!-- <div class="order-btn" @click="checkMoreChange(order)">Check More Details</div> -->
+                            <div class="order-btn" @click="modifyOrder(order)" v-if="order.paymentState==0">Details
+                            </div>
+                            <div class="order-btn order-btn-primary" @click="toPay(order)" v-if="order.paymentState==0">
+                                Payment
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+                </div>
+
+                <div v-else="">
+                    {{$t("no_data_available")}}
+                </div>
+            </div>
+
+        </main>
+    </div>
+    <iframe v-cloak="" src="..\..\public\views\footer.html" frameborder="0" class="footer" id="footer"></iframe>
+    <div class="tab_bar" v-cloak="">
+        <a href="..\..\index.html" class="tab_bar_item">
+            <img src="..\..\static\tab_bar_home.png" alt="">
+        </a>
+        <a href="product.html" class="tab_bar_item">
+            <img src="..\..\static\tab_bar_product.png" alt="">
+        </a>
+        <a href="support.html" class="tab_bar_item">
+            <img src="..\..\static\tab_bar_jishu2.png" alt="">
+        </a>
+        <a href="personal.html" class="tab_bar_item">
+            <img src="..\..\static\posnal_phone.png" alt="">
+        </a>
+    </div>
+</div>
+<!-- <script src="https://unpkg.com/spacingjs" defer></script> -->
+<script src="..\utils\utils.js"></script>
+<script src="..\..\public\axios\dist\axios.min.js"></script>
+<script src="..\..\public\js\request.js"></script>
+<script src="..\..\public\js\element-ui.js"></script>
+<script src="..\..\public\js\vue-i18n.js"></script>
+<script src="..\..\public\js\dayjs.min.js"></script>
+<script src="js\i18n.js"></script>
+<script src="js\product-mixin.js"></script>
+<script src="js\order_center.js?v=2.020220805"></script>
+</body>
+
+</html>

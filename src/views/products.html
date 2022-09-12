@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsMiner Products | WhatsMiner M50S, WhatsMiner M50,WhatsMiner M53</title>
+    <meta name="keywords" content="WhatsMiner M30S++ 112T,WhatsMiner M30S+,WhatsMiner M30S，WhatsMiner M50S,WhatsMiner M53S,WhatsMiner M33S++,WhatsMiner M33S+,WhatsMiner M50,Asic Miner,Bitcoin Mining">
+    <meta name="description" content="WhatsMiner is a leading brand of mining hardware and chip design developed by MicroBT,Including M50S,M50,M53,M20S,M30S++ products  sales.">
+    <link rel="stylesheet" class="link" href="css\product.css?v=2.020220805">
+    <link rel="stylesheet" class="links" href="">
+    <!-- <link rel="stylesheet" media="screen and (min-width:0px) and (max-width:750px)" href="./css/product_750.css?v=2.020220805" /> -->
+    <link rel="stylesheet" class="link" href="..\..\public\css\element-ui.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="..\..\static\favicon.ico">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-227533464-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "UA-227533464-1");
+    </script>
+  </head>
+
+  <body style="overflow: -Scroll; overflow-x: hidden">
+    <div id="app">
+      <!-- <iframe v-cloak src="../../public/views/header.html" frameborder="0" class="header" id="header"></iframe> -->
+      <iframe v-cloak="" src="..\..\public\views\header.html" frameborder="0" class="header" id="header"></iframe>
+
+      <div class="message-wrap" v-cloak="" v-if="bannerInfo && bannerInfo.status == 1 && bannerInfo.streamerType == 0 && !isCloseMsg" ref="imgClose">
+        <img src="..\..\static\icon\horn-active.png" alt="horn" class="horn">
+        <div class="animate_set">
+          <span class="message">{{ isEn ? bannerInfo && bannerInfo.contentEn : bannerInfo && bannerInfo.contentZh }}</span>
+        </div>
+        <img src="..\..\static\close-button.png" alt="close" @click="close" class="close-button">
+      </div>
+      <!-- 外层容器 -->
+
+      <div class="wrap" v-cloak="">
+        <!-- 顶部图片部分的容器 -->
+        <div class="banner_wrap" v-if="isEn ? bannerData[1] : bannerData[0]">
+          <img class="pc_img" :src="isEn ? bannerData[1] && bannerData[1].webUrl : bannerData[0] && bannerData[0].webUrl">
+          <img class="phone_img" :src="isEn ? bannerData[1] && bannerData[1].mobileUrl : bannerData[0] && bannerData[0].mobileUrl">
+          <div class="text-wrap">
+            <h3>{{ isEn? bannerData[1] && bannerData[1].title : bannerData[0] && bannerData[0].title }}</h3>
+            <p>{{ isEn? bannerData[1] && bannerData[1].homeText : bannerData[0] && bannerData[0].homeText }}</p>
+          </div>
+        </div>
+        <!-- 产品展示部分的容器 -->
+        <main class="product_wrap">
+          <span class="title">{{ $t("allProduct") }}</span><span class="total">{{ $t("productCnt", { cnt: productInfo.length }) }}</span>
+          <!-- 产品部分 -->
+          <div class="container">
+            <template v-for="product, idx in [...flashBuyProducts, ...otherProducts]">
+              <div class="item" :class="getStatus(product.specifications[0], false)" @click="gotoDetail(product)">
+                <div class="status" :class="getStatus(product.specifications[0], false)">
+                  <span>{{ getStatus(product.specifications[0]) }}</span>
+                </div>
+                <h1 class="product_name">{{ tt(product, "name") }}</h1>
+                <img :src="getPictureFullpath(product.picturesEn)" class="product_img" :alt='product.altsStr.split(",")[product.picturesCn.split(",").indexOf(product.picturesEn)]'>
+                <div class="release-time" v-if="product.specifications[0].goodsType > 0">
+                  <span v-if="product.specifications[0].goodsType != 2">
+                    {{ getReleaseTitle(product.specifications[0]) }}
+                    <p><i class="el-icon-date"></i>{{ fmt(product.specifications[0].launchAt) }}</p>
+                  </span>
+                  <div v-else="">
+                    <span class="last-time">Last:<i>{{ product.specifications[0].flashBuyStocks }}</i></span>
+                    <p class="countdown-title">{{ $t("countdowntitle") }}</p>
+                    <p>{{ product.specifications[0].countdown }}</p>
+                  </div>
+                </div>
+                <div class="product_info" :class="{ 'product_info_time': true }">
+                  <div class="info_item">
+                    <span class="title">{{ $t("hashRate") }}</span>
+                    <span class="info">{{ product.specifications && product.specifications[0].hashrate }}T</span>
+                  </div>
+                  <div class="info_item">
+                    <span class="title">{{ $t("powerratio") }}</span>
+                    <span class="info">{{ product.specifications && product.specifications[0].powerratio }}</span>
+                  </div>
+                </div>
+                <span class="product_price">${{ product.specifications && product.specifications[0][product.specifications[0].goodsType == 2 ? "flashBuyPriceEn" : "priceEn"] }}</span>
+              </div>
+              <br v-if="idx==(flashBuyProducts.length-1)">
+            </template>
+          </div>
+          <div class="shopping_cart" @click="shoppingCart">
+            <img src="..\..\static\%E8%B4%AD%E7%89%A9%E8%BD%A6%402x.png" alt="">
+          </div>
+        </main>
+      </div>
+      <iframe v-cloak="" src="..\..\public\views\footer.html" frameborder="0" class="footer" id="footer"></iframe>
+      <div class="tab_bar">
+        <a href="..\..\index.html" class="tab_bar_item">
+          <img src="..\..\static\tab_bar_home.png" alt="tab_bar_item">
+        </a>
+        <a href="product.html" class="tab_bar_item">
+          <img src="..\..\static\proudect_home.png" alt="tab_bar_item">
+        </a>
+        <a href="support.html" class="tab_bar_item">
+          <img src="..\..\static\tab_bar_jishu2.png" alt="tab_bar_item">
+        </a>
+        <a href="personal.html" class="tab_bar_item">
+          <img src="..\..\static\tab_bar_personal%20.png" alt="tab_bar_item">
+        </a>
+      </div>
+    </div>
+    <script src="..\..\public\js\vue.js"></script>
+    <script src="..\..\public\js\vue-i18n.js"></script>
+    <script src="..\..\public\js\element-ui.js"></script>
+
+    <script src="..\..\public\axios\dist\axios.min.js"></script>
+    <script src="..\..\public\js\request.js"></script>
+
+    <script src="js\product-mixin.js"></script>
+    <script src="js\i18n.js"></script>
+    <script src="..\..\public\js\dayjs.min.js"></script>
+    <script src="js\avail_product-1.js"></script>
+    <script src="js\product.js?v=2.020220805"></script>
+  </body>
+</html>
