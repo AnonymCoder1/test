@@ -1,0 +1,169 @@
+﻿
+  <!DOCTYPE html>
+  <html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>底部</title>
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+        integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+        integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd"
+        crossorigin="anonymous"></script> -->
+
+    <link rel="stylesheet" href="css\footer.css?v=2.020220805">
+    <!-- 手机端 -->
+    <!-- <link media="screen and (max-width:750px)" rel="stylesheet" href="./css/footer-750.css"> -->
+  </head>
+
+  <body>
+    <base target="_top">
+    <div class="container-fluid" id="app">
+      <footer v-cloak="">
+        <!-- 容器 -->
+        <div class="container">
+          <!-- 横线上面部分的容器 -->
+          <div class="wrap">
+            <!-- 左边的logo -->
+            <a href="..\..\index.html" class="logo-wrap">
+              <img src="..\..\static\logo-white.png" :alt="isEn ? `WhatsMiner` : `比特微`" class="logo">
+            </a>
+            <!-- 右边部分 -->
+            <div class="right">
+              <div class="item">
+                <span><a href="..\..\src\views\product.html" @click="handleClick(1)">{{ isEn ? `Product` : `产品` }}</a>
+                  <img src="..\..\static\more-bottom.png" alt="icon"></span>
+                <div v-for="product in products" :key="product.id">
+                  <a @click="gotoDetail(product)">{{ isEn ? product.nameEn : product.nameCn }}</a>
+                </div>
+
+              </div>
+              <div class="item">
+                <span @click="handleClick(3)">
+                  <a href="..\..\src\views\support.html">{{ isEn ? `Support` : `支持` }}</a>
+                  <img src="..\..\static\more-bottom.png" alt="icon">
+                </span>
+                <div>
+                  <!-- <a href="https://www.whatsminer.com/src/views/firmware-download.html" -->
+                  <a href="..\..\src\views\firmware-download.html" @click="handleClick(3)">{{ isEn ? `Technology
+                                      Support`
+                      : `技术支持`
+                  }}</a>
+                </div>
+                <div>
+                  <!-- <a href="https://www.whatsminer.com/src/views/repair_process.html">{{isEn? `Repair` : `维修`}}</a> -->
+                  <a href="..\..\src\views\repair_process.html">{{ isEn ? `Repair` : `维修` }}</a>
+                </div>
+              </div>
+              <div class="item">
+                <span>
+                  <a href="..\..\src\views\contact.html" @click="handleClick(5)">{{ isEn ? `Contact Us` : `联系我们` }}</a>
+                  <img src="..\..\static\more-bottom.png" alt="icon">
+                </span>
+                <div>
+                  <a href="..\..\src\views\contact.html" @click="handleClick(5)">{{ isEn ? `Contact Us` : `联系我们` }}</a>
+                </div>
+              </div>
+              <div class="item">
+                <span>
+                  <a href="..\..\src\views\dynamic.html" target="_parent" @click="handleClick(4)">{{ isEn ? `News` :
+                      `新闻`
+                  }}</a>
+                  <img src="..\..\static\more-bottom.png" alt="icon">
+                </span>
+                <div>
+                  <a href="..\..\src\views\dynamic.html" target="_parent" @click="handleClick(4)">{{ isEn ? `News` :
+                      `新闻`
+                  }}</a>
+                </div>
+              </div>
+              <div class="item">
+                <span> <a href="JavaScript:;">{{ isEn ? `Follow Us` : `跟我们来` }}</a></span>
+                <!-- 图标的容器 -->
+                <div class="icon-wrap">
+                  <a href="https://www.facebook.com/WhatsMiner" target="_blank"><img src="..\..\static\bottom-facebook.png" alt="facebookIcon"></a>
+                  <a href="https://twitter.com/Whatsminer_MBT" target="_blank"><img src="..\..\static\bottom-twitter.png" alt="twitterIcon"></a>
+                  <a href="https://t.me/whatsminercommunity " target="_blank"><img src="..\..\static\bottom-telegram.png" alt="telegramIcon"></a>
+                  <a href="https://www.linkedin.com/company/whatsminer" target="_blank"><img src="..\..\static\bottom-linkedin.png" alt="linkedinIcon"></a>
+                  <a href="https://www.youtube.com/channel/UCEQ566Mxh1Kq7AXwUIlReHA" target="_blank"><img src="..\..\static\bottom-youtube.png" alt="youtubeIcon"></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 底部 -->
+          <div class="copyRight">
+            <span>
+              CopyRight &copy; 2019 Microbt.com. All Rights Reserved. Shenzhen MicroBT Electronics Technology Co. Ltd
+              粤ICP备17014611号-1
+              <a href="..\..\src\views\privacy_policy.html" class="privacy_policy">{{ isEn ? `Privacy Policy` :
+                  `隐私政策`
+              }}</a>
+            </span>
+            <ul>
+              <!-- <li>{{isEn? `Perfection` : `完美`}}</li>
+            <li>{{isEn?`Win-win` : `双赢`}}</li>
+            <li>{{isEn? `Integrity` : `真诚`}}</li> -->
+              <li>Perfection</li>
+              <li>Integrity</li>
+              <li>Win-win</li>
+            </ul>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script src="..\axios\dist\axios.js"></script>
+    <script src="..\js\request.js"></script>
+    <script src="..\js\vue.js"></script>
+    <script src="..\..\src\views\js\avail_product.js?v=2.020220805"></script>
+    <script>
+      Vue.config.productionTip = false;
+    window.vm = new Vue({
+      mixins:[Avail_product],
+      el: '#app',
+      data() {
+        return {
+          isEn: true,
+          products:[]
+        };
+      },
+      methods: {
+        // 点击链接的回调
+        handleClick(navId) {
+          localStorage.setItem('navId', navId);
+        },
+
+         gotoDetail(product) {
+            sessionStorage.setItem("product_id", JSON.stringify({ id: product.id }))
+            top.location = "../../src/views/product_detail"+(this.productType=="sample"?"s":"")+".html?id="+product.id+"&name="+product.nameEn
+        },
+      },
+      created() {
+        // this.isEn = JSON.parse(localStorage.getItem('isEn'));
+        JSON.parse(localStorage.getItem('isEn')) == null ? this.isEn = true : this.isEn = JSON.parse(localStorage
+          .getItem('isEn'));
+        window.onstorage = e => { 
+          if (e.key == 'isEn') {
+            this.isEn = JSON.parse(e.newValue);
+          }
+        };
+        
+        this.getProductType().then(()=>{
+          if(this.productType=="sample"){
+              this.getSamples().then(data=>{
+                this.products=data.slice(0,3)
+              })
+          }else{
+              this.getProducts().then(products=>{
+                  this.products=products.slice(0,3)
+                })
+          }
+        })
+      }
+    });
+    </script>
+  </body>
+
+  </html>

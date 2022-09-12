@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsMiner</title>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" class="link" href="css\personal_message.css?v=2.020220805">
+    <link rel="icon" type="image/png" sizes="32x32" href="..\..\static\favicon.ico">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-227533464-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "UA-227533464-1");
+    </script>
+  </head>
+
+  <body style="overflow: -Scroll; overflow-x: hidden">
+    <div id="app">
+      <iframe v-cloak="" src="..\..\public\views\header.html" frameborder="0" class="header" id="header"></iframe>
+      <div class="message-wrap" v-cloak="" v-if="bannerInfo && bannerInfo.status == 1 && bannerInfo.streamerType == 0 && !isCloseMsg" ref="imgClose">
+        <img src="..\..\static\icon\horn-active.png" alt="horn" class="horn">
+        <div class="animate_set">
+          <span class="message">{{isEn? bannerInfo.contentEn : bannerInfo.contentZh}}</span>
+        </div>
+        <img src="..\..\static\close-button.png" alt="close" @click="close" class="close-button">
+      </div>
+      <!-- 外层容器 -->
+      <div class="wrap" v-cloak="">
+        <!-- 左侧的导航栏 -->
+        <iframe v-cloak="" src="..\..\public\views\nav-bar.html" frameborder="0" class="nav-bar" id="nav-bar"></iframe>
+        <!-- 内容区域的容器 -->
+        <main class="main" v-cloak="">
+          <!-- 面包屑容器 -->
+          <div class="crumbs-wrap">
+            <a href="..\..\index.html">{{isEn? "Home Page" : '首页'}}</a>
+            <span>{{isEn?'Message':'消息'}}</span>
+          </div>
+          <div class="top-wrap">
+            <h3 class="title">{{isEn? `Message`:`消息`}}</h3>
+            <div class="clear-all" @click="deleteMessage(false)">
+              <span>{{isEn? `Clear All` : `全部清除`}}</span>
+            </div>
+            <div class="clear-all_phone" @click="deleteDialog(false)">
+              <span>{{isEn? `Clear All` : `全部清除`}}</span>
+            </div>
+          </div>
+          <!-- 全部信息的容器 -->
+          <div class="message-wrap-11">
+            <!-- 每一条消息的容器 -->
+            <div class="message-item pc" v-for="item in messageData" :key="item.id" v-if="!isPhone">
+              <div class="top">
+                <h3 class="title">{{isEn? item.titleEn : item.titleZh}}</h3>
+                <img src="..\..\static\icon\delete.png" @click="deleteMessage(item)">
+              </div>
+              <div>
+                <span class="info">{{item.publisher}}</span>
+                <span class="date">{{item.gmtCreate}}</span>
+              </div>
+              <div class="message" :class="{active : item.id == checkId}" v-html="isEn? item.contentEn : item.contentZh"></div>
+              <span class="open" @click="openId(item.id)"><span>{{item.id == checkId ? (isEn?'Put Away' : '收起') :
+                  (isEn?'open' : '打开')}}</span><img src="..\..\static\select-bottom.png"></span>
+            </div>
+            <!-- 移动端 -->
+            <div class="message_item_phone" v-for="item in messageData" :key="item.id" v-if="isPhone">
+              <div class="top">
+                <h3>{{isEn? item.titleEn : item.titleZh}}</h3>
+                <p>{{item.publisher}}</p>
+              </div>
+              <div class="center">
+                <span>{{isEn? item.contentEn : item.contentZh}}</span>
+              </div>
+              <div class="bottom">
+                <span>{{item.gmtCreate}}</span>
+                <button @click="deleteDialog(item.id)">
+                  {{isEn?'Delete': '删除'}}
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- 删除弹框 -->
+          <div class="message_dialog" @mousedown.self="isMessageClose = false" v-if="isMessageClose">
+            <div class="message_wrap">
+              <h3>{{isEn? 'Remind' : '提醒'}}</h3>
+              <span v-if="delete_one == 1">{{isEn? 'Are you sure you want to delete?' :
+                '你确定要删除吗？'}}</span>
+              <span v-if="delete_one == 0">
+                {{isEn? 'Are you sure you want to delete all?' :
+                '你确定要删除全部吗？'}}</span>
+              <div class="button_wrap">
+                <button @click="close_button" class="close_button">
+                  {{isEn? 'Close' : '关闭'}}
+                </button>
+                <button v-if="delete_one == 1" @click="confirm_button" class="submit_button">
+                  {{isEn? 'Submit' : '提交'}}
+                </button>
+                <button v-if="delete_one == 0" @click="confirm_button" class="submit_button">
+                  {{isEn? 'Submit' : '提交'}}
+                </button>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+      <iframe v-cloak="" src="..\..\public\views\footer.html" frameborder="0" class="footer" id="footer"></iframe>
+    </div>
+    <script src="..\..\public\js\vue.js"></script>
+    <script src="..\..\public\axios\dist\axios.min.js"></script>
+    <script src="..\..\public\js\request.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="js\personal_message.js?v=2.020220805"></script>
+  </body>
+</html>

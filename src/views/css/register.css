@@ -1,0 +1,226 @@
+@import url(../../../public/css/rem.css);
+body {
+  margin: 0;
+  padding: 0;
+}
+html {
+  height: 100vh;
+  width: 100vw;
+  background: url('../../assets/img/login-bg.jpg') 0 0 / 100vw 100vh;
+  overflow: hidden;
+}
+#app {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#app .logo {
+  position: absolute;
+  top: 40px;
+  left: 80px;
+  width: 217px;
+  height: 53px;
+}
+#app .lang_wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: absolute;
+  top: 55px;
+  right: 80px;
+}
+#app .lang_wrap span {
+  letter-spacing: .6px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #FFFFFF;
+  line-height: 22px;
+  cursor: pointer;
+  opacity: 0.6;
+}
+#app .lang_wrap span.line {
+  cursor: unset;
+  margin: 0 7px;
+}
+#app .lang_wrap span.active {
+  opacity: 1;
+}
+#app .wrap {
+  box-sizing: border-box;
+  padding: 42px 60px 0;
+  position: relative;
+  width: 500px;
+  height: 651px;
+  background-color: #fff;
+  border-radius: 10px;
+}
+#app .wrap h1 {
+  margin: 0;
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 45px;
+  letter-spacing: 1.2px;
+}
+#app .wrap .name,
+#app .wrap .contact-phone-number,
+#app .wrap .email,
+#app .wrap .verification-code,
+#app .wrap .password,
+#app .wrap .enter-the-password-again {
+  box-sizing: border-box;
+  margin-top: 24px;
+  padding-left: 16px;
+  width: 378px;
+  height: 42px;
+  border-radius: 6px;
+  border: 1px solid #d2d2d2;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+}
+#app .wrap .name:focus,
+#app .wrap .contact-phone-number:focus,
+#app .wrap .email:focus,
+#app .wrap .verification-code:focus,
+#app .wrap .password:focus,
+#app .wrap .enter-the-password-again:focus {
+  outline-color: #4d66ff;
+}
+#app .wrap .name::placeholder,
+#app .wrap .contact-phone-number::placeholder,
+#app .wrap .email::placeholder,
+#app .wrap .verification-code::placeholder,
+#app .wrap .password::placeholder,
+#app .wrap .enter-the-password-again::placeholder {
+  font-size: 16px;
+  font-weight: 400;
+  color: #d3d3d3;
+  line-height: 22px;
+}
+#app .wrap .name {
+  margin-top: 26px;
+}
+#app .wrap .email {
+  width: 287px;
+}
+#app .wrap .send-button {
+  margin-top: 25px;
+  width: 80px;
+  height: 42px;
+  background: rgba(255, 255, 255, 0);
+  border-radius: 6px;
+  border: 1px solid #4d66ff;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 400;
+  color: #4d66ff;
+  line-height: 22px;
+}
+#app .wrap .send-button:focus-visible {
+  border: 1px solid #4d66ff;
+  color: #4d66ff;
+}
+#app .wrap .user-agreement-wrap {
+  margin-top: 8px;
+  display: flex;
+  max-width: 154px;
+  height: 22px;
+}
+#app .wrap .user-agreement-wrap input {
+  display: none;
+}
+#app .wrap .user-agreement-wrap input:checked + label {
+  background: url('../../../static/icon/checked.png') 0 0 / 100% 100%;
+}
+#app .wrap .user-agreement-wrap label {
+  margin-top: 3px;
+  margin-right: 10px;
+  background: url('../../../static/icon/no-check.png') 0 0 / 100% 100%;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+#app .wrap .register-button {
+  margin-top: 21px;
+  width: 378px;
+  height: 42px;
+  background: #4d66ff;
+  border-radius: 24px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: .6px;
+  cursor: pointer;
+}
+#app .wrap .register-button:focus-visible {
+  outline: none;
+}
+#app .wrap .user-agreement,
+#app .wrap .sign-up-now {
+  white-space: nowrap;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 400;
+  color: #4d66ff;
+  line-height: 22px;
+  cursor: pointer;
+}
+#app .wrap .sign-up-now {
+  display: block;
+  margin-top: 16px;
+  text-align: center;
+}
+#app .wrap input[type='checkbox'] {
+  width: 16px;
+  height: 16px;
+  min-width: 10px;
+  min-height: 10px;
+  vertical-align: middle;
+}
+#app .wrap input[disabled] {
+  border-color: #ccc;
+  color: #ccc;
+  cursor: not-allowed;
+}
+#app .wrap.user_agreement {
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 45px;
+}
+#app .wrap.user_agreement .title {
+  margin-bottom: 16px;
+}
+#app .wrap.user_agreement .content {
+  height: 399px;
+  font-size: 16px;
+  line-height: 26px;
+  margin-bottom: 30px;
+  overflow: auto;
+}
+#app .wrap.user_agreement .content::-webkit-scrollbar {
+  width: 8px;
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+#app .wrap.user_agreement .content::-webkit-scrollbar-thumb {
+  background: #bbbbbb;
+  width: 8px;
+  border-radius: 4px;
+}
+#app .wrap.user_agreement .return_button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 378px;
+  height: 42px;
+  background: #4D66FF;
+  border-radius: 24px;
+  font-size: 16px;
+  color: #FFFFFF;
+  line-height: 22px;
+  cursor: pointer;
+}

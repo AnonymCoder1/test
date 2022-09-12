@@ -1,0 +1,650 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsMiner</title>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" class="link" href="css\personal.css?v=2.020220805">
+    <link rel="stylesheet" href="..\utils\utils.css">
+    <!-- <link rel="icon" type="image/png" sizes="32x32" href="../../static/favicon.ico"> -->
+    <link rel="icon" type="image/png" sizes="32x32" href="..\..\static\favicon.ico">
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-227533464-1"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'UA-227533464-1');
+	</script>
+    <style>
+        /* 错误信息的样式 */
+        .error_warp {
+            font-size: .533333rem;
+            margin-top: .066667rem;
+        }
+    </style>
+    <!-- <script src="https://cdn.bootcss.com/vConsole/3.2.0/vconsole.min.js"></script>
+    <script>
+      let vConsole = new VConsole()
+    </script> -->
+    <script src="..\..\public\js\vue.js"></script>
+</head>
+
+<body style="overflow:-Scroll;overflow-x:hidden">
+    <div id="app">
+        <iframe v-cloak="" src="..\..\public\views\header.html" frameborder="0" class="header" id="header"></iframe>
+        <div class="message-wrap" v-cloak="" v-if="bannerInfo && bannerInfo.status == 1 && bannerInfo.streamerType == 0 && !isCloseMsg" ref="imgClose">
+            <img src="..\..\static\icon\horn-active.png" alt="horn" class="horn">
+            <div class="animate_set">
+                <span class="message">{{isEn? bannerInfo.contentEn : bannerInfo.contentZh}}</span>
+            </div>
+            <img src="..\..\static\close-button.png" alt="close" @click="closeMsg" class="close-button">
+        </div>
+        <!-- 外层容器 -->
+        <div class="wrap" v-cloak="">
+            <!-- 左侧的导航栏 -->
+            <iframe v-pre="" src="..\..\public\views\nav-bar.html" frameborder="0" class="nav-bar" id="nav-bar"></iframe>
+            <!-- 内容区域的容器 -->
+            <main class="main">
+                <!-- 面包屑容器 -->
+                <div class="crumbs-wrap">
+                    <a href="..\..\index.html">{{isEn? "Home Page" : '首页'}}</a>
+                    <span>{{isEn?'Personal Center':'个人中心'}}</span>
+                </div>
+                <!-- 头部的容器 -->
+                <div class="top-wrap">
+                    <!-- 左边部分的容器 -->
+                    <div class="top-left">
+
+                        <!-- 用户头像 -->
+                        <!-- <div class="user-avatar-wrap" v-if="userInfo.avatar">
+                            <img :src="userInfo.avatar" class="user-avatar" title="user Avatar">
+                        </div> -->
+                        <div class="user-avatar-wrap">
+                            <el-upload class="avatar-uploader" :show-file-list="false" :on-success="handleAvatarSuccess" action="string" :before-upload="beforeAvatarUpload" :http-request="UploadImage">
+                                <img v-if="avatarimageUrl||userInfo.avatar!==''" :src="(userInfo.avatar?userInfo.avatar:avatarimageUrl) || '../../static/personal_weidenglu.png'" class="avatar">
+                                <i v-else="" class="el-icon-plus avatar-uploader-icon"></i>
+                            </el-upload>
+                        </div>
+
+                        <div class="right">
+                            <!-- 邮箱 -->
+                            <span class="email">{{isLogin? userInfo.email : 'ruianna@yahoo.com'}}</span>
+                            <!-- 订阅按钮 -->
+                            <div class="subscribed" @click="handleSubscribed" :class="{'checked' : !!userInfo.subscribe}">
+                                <span>{{ !!userInfo.subscribe ? (isEn? `Unsubscribe` : `取消订阅`) : (isEn? `Subscribed` : `订阅`)}}</span>
+                            </div>
+                            <!-- 退出登录 -->
+                            <span class="sign-out" @click="signOut">{{isEn? 'Sign Out' : '退出'}}</span>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- 中间部分的容器 -->
+                <div class="center-wrap" v-if="productType!='sample'"><span class="membership-interests">{{isEn? `Membership interests` :
+                        `会员权益`}}</span>
+                    <!-- 会员权益 -->
+                    <!-- vip等级 -->
+                    <a href="JavaScript:;" class="vip">{{ isEn ? vip.nameEn : vip.nameCn}}</a>
+                    <!-- 进度条 -->
+                    <div class="experience">
+                        <!-- 进度 -->
+                        <div class="pace" :style="{width:progressBar+`%`}"></div>
+                    </div>
+                    <!-- 下面部分 -->
+                    <div class="bottom">
+                        <!-- 查看用户规则的好处 -->
+                        <a href="JavaScript:;" class="user-rule" @click="isShowUserRule=true">
+                            {{isEn? 'View User Rule Benefits' : '查看用户规则的好处'}}</a>
+                        <!-- 经验值 -->
+                        <span>{{ point }} / {{ vip.pointEnd }}</span>
+                    </div>
+                </div>
+                <!-- 底部部分的容器 -->
+                <div class="bottom-wrap">
+                    <!-- 底部的上面部分 -->
+                    <div class="bottom-top">
+                        <!-- 账户信息文字 -->
+                        <h3 class="ac-info">{{isEn? 'Account information' : '帐户信息'}}</h3>
+                        <!-- 下面信息的容器 -->
+                        <div class="info-wrap">
+                            <div class="info-item">
+                                <span class="info">{{isEn? 'order user name:' :'下单用户'}}</span>
+                                <span class="content">{{userInfo.altname}}</span>
+                            </div>
+
+                            <div class="info-item">
+                                <span class="info">{{isEn? 'mailbox:' :'邮箱'}}</span>
+                                <span class="content">{{userInfo.email}}</span>
+                                <a href="JavaScript:;" @click="handleChangeEmail">{{isEn? 'Change' : '修改'}}</a>
+                            </div>
+                            <div class="info-item">
+                                <span class="info">{{isEn? 'Phone Number:':'手机号码'}}</span>
+                                <span class="content">+{{countryCode}} {{userInfo.mobile}}</span>
+                                <a href="JavaScript:;" @click="handleChangePhone">{{isEn? 'Change' : '修改'}}</a>
+                            </div>
+                            <div class="info-item">
+                                <span class="info">{{isEn? 'Login Password:':'登录密码'}}</span>
+                                <span class="content">{{isEn? `We recommend you to change the password periodically for
+                                    the security` : '我们建议您定期更改服务器的密码安全'}}</span>
+                                <a href="JavaScript:;" @click="handleChangePassword">{{isEn? 'Change' : '修改'}}</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 底部的下面部分 -->
+                    <!-- <div class="bottom-bottom" v-if="productType!='sample'"> -->
+                        <!-- 实名认证 -->
+                        <!-- <h3>{{isEn? `Real name authentication` : `实名认证`}}</h3> -->
+                        <!-- 认证状态 -->
+                        <!-- <div class="info-item">
+                            <span class="info">{{isEn? `Status Of Certification:` : `认证状态：`}}</span>
+                            <span class="content">
+                                {{userInfo.state | stateFilter(isEn)}}
+                            </span>
+
+                            <a href="JavaScript:;" @click="showRealName"
+                                v-if="userInfo.state==0 ||  userInfo.state==2">{{isEn? `Authenticate It Now` : `现在验证它`}}</a>
+                        </div> -->
+                    <!-- </div> -->
+                </div>
+            </main>
+            <!-- 实名认证的弹框 -->
+            <div class="real-name-wrap" v-if="realName">
+                <!-- 白色框框 -->
+                <div class="main-wrap">
+                    <!-- 关闭按钮 -->
+                    <img src="..\..\static\close-button.png" class="close-button" @click="closeRealName">
+                    <h3 class="title">{{isEn? `Real-Name Authentication Remind` : `实名认证提醒`}}</h3>
+                    <!-- 步骤条部分 -->
+                    <div class="step-wrap">
+                        <!-- 虚线 -->
+                        <div class="dotted"></div>
+                        <!-- 实线 -->
+                        <div class="solid" :style="{width:(currentStep-1) *6.0667+'rem'}"></div>
+                        <!-- 步骤的信息 -->
+                        <div class="step-info">
+                            <span class="step-item current">{{isEn? `Certification Instructions` : `认证说明`}}</span>
+                            <span class="step-item">{{isEn? `Audit Type` : `审计类型`}}</span>
+                            <span class="step-item">{{isEn? `Submission Of Information` : `提交资料`}}</span>
+                            <span class="step-item">{{isEn? `Under Review` : `正在审查中`}}</span>
+                            <span class="step-item">{{isEn? `Audit Completed` : `审计完成`}}</span>
+                        </div>
+                    </div>
+                    <!-- 步骤一 -->
+                    <div class="content" v-if="currentStep==1">
+                        <p v-if="isEn" v-html="realData.policyEn">
+
+                        </p>
+                        <p v-else="" v-html="realData.policyCn"></p>
+                    </div>
+                    <!-- 步骤二 -->
+                    <div class="content2" v-if="currentStep==2">
+                        <div class="select-wrap">
+                            <div class="select-item" :class="{'active': accountType=='0' }" @click="accountType=0">
+                                <div class="add-icon"></div>
+                                <span>{{isEn? `Personal` : `个人`}}</span>
+                            </div>
+                            <div class="select-item" :class="{'active': accountType=='1' }" @click="accountType=1">
+                                <div class="add-icon"></div>
+                                <span>{{isEn? `Organization` : `组织`}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 步骤三 （个人） -->
+                    <div class="content3" v-if="currentStep==3 && accountType==0">
+                        <!-- 选择框 -->
+                        <div class="nationality">
+                            <span>{{isEn? `Nationality` : `国籍`}}</span>
+                            <el-select v-model="nationality" :placeholder="isEn? `Please select` : `请选择`" label="Nationality">
+                                <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </div>
+                        <!-- 输入框 -->
+                        <div class="name">
+                            <span>{{isEn? `Name` : `姓名`}}</span>
+                            <input type="text" v-model="name" class="requireds" :placeholder="isEn? `Please Fill` : `请填写`">
+                        </div>
+                        <!-- 性别 -->
+                        <div class="gender">
+                            <span>{{isEn? `Gender` : `性别`}}</span>
+                            <div class="radio-wrap">
+                                <div class="male">
+                                    <input type="radio" v-model="gender" id="yes" value="0">
+                                    <label for="yes"></label>
+                                    <span>{{isEn? `Male` : `男士`}}</span>
+                                </div>
+                                <div class="female">
+                                    <input type="radio" v-model="gender" id="no" value="1">
+                                    <label for="no"></label>
+                                    <span>{{isEn? `Female` : `女士`}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 身份证号码 -->
+                        <div class="identification-number">
+                            <span>{{isEn? `Identification Number` : `身份证号码`}}</span>
+                            <input type="text" class="requireds" v-model="taxid" :placeholder="isEn? `Please Fill` : `请填写`">
+                        </div>
+                        <!-- 图片上传 -->
+                        <div class="photo">
+                            <span>{{isEn? `Photo` : `照片`}}</span>
+                            <el-upload class="avatar-uploader" :action="`${baseUrl}/renren-fast/app/oss/upload`" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+                                <img v-if="imgUrl" :src="imgUrl" class="avatar">
+                                <i v-else="" class="el-icon-plus avatar-uploader-icon"></i>
+                            </el-upload>
+                        </div>
+                    </div>
+                    <!-- 步骤三 （企业） -->
+                    <div class="content3" v-if="currentStep==3 && accountType==1">
+                        <!-- 选择框 -->
+                        <div class="nationality">
+                            <span>{{isEn? `Nationality` : `国籍`}}</span>
+                            <el-select v-model="nationality" :placeholder="isEn? `Please Fill` : `请填写`" label="Nationality">
+                                <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+                                </el-option>
+                            </el-select>
+                        </div>
+                        <!-- 企业名称 -->
+                        <div class="name">
+                            <span>{{isEn? `Enterprise Name` : `企业名称`}}</span>
+                            <input type="text" v-model="name" class="requireds" :placeholder="isEn? `Please Fill` : `请填写`">
+                        </div>
+                        <!-- 地址 -->
+                        <div class="name">
+                            <span>{{isEn? `Address` : `地址`}}</span>
+                            <input class="requireds" type="text" v-model="address" :placeholder="isEn? `Please Fill` : `请填写`">
+                        </div>
+                        <!-- 营业执照号 -->
+                        <div class="name">
+                            <span>{{isEn? `Business license No` : `营业执照号`}}</span>
+                            <input v-model="taxid" class="requireds" type="text" :placeholder="isEn? `Please Fill` : `请填写`">
+                        </div>
+                        <!-- 上传图片 -->
+                        <div class="photo">
+                            <span>{{isEn? `Business license photo` : `营业执照照片`}}</span>
+                            <el-upload class="avatar-uploader" :action="`${baseUrl}/renren-fast/app/oss/upload`" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+                                <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                                <i v-else="" class="el-icon-plus avatar-uploader-icon"></i>
+                            </el-upload>
+                        </div>
+                    </div>
+                    <!-- 步骤四 (审核状态) -->
+                    <div class="content4" v-if="currentStep==4">
+                        <div class="state0" v-if="state==0">
+                            <img src="..\..\static\%E5%AE%8C%E6%88%90.png">
+                            <h3>{{isEn? `Under review…` : `审核中...`}}</h3>
+                        </div>
+                        <div class="state1" v-if="state==1">
+                            <img src="..\..\static\%E5%AE%8C%E6%88%90.png">
+                            <h3>{{isEn? `Under review…` : `审核中...`}}</h3>
+                        </div>
+                        <div class="state2" v-if="state==2">
+                            <img src="..\..\static\%E5%AE%8C%E6%88%90.png">
+                            <h3>{{isEn? `Under review…` : `审核中...`}}</h3>
+                        </div>
+                    </div>
+                    <!-- 上一步的按钮 -->
+                    <button class=" prev-step" @click="prevStep" v-if="currentStep>1 && currentStep< 4">{{isEn?
+                        `Previous Step` : `上一步`}}</button>
+                    <!-- 下一步的按钮 -->
+                    <button class="next-step" @click="nextStep" v-if="currentStep < 4">{{isEn? `Next Step` :
+                        `下一步`}}</button>
+                </div>
+            </div>
+            <!-- 用户规则的好处的弹框 -->
+            <div class="user-rule-wrap" v-if="isShowUserRule">
+                <!-- 白色框框 -->
+                <div class="main-wrap">
+                    <!-- <h3 class="title">{{isEn? `User Rule Interest` : `用户规则兴趣`}}</h3> -->
+                    <h3 class="title">{{isEn? vipRuleData.titleEn : vipRuleData.titleCn}}</h3>
+                    <img src="..\..\static\close-button.png" class="close-button" @click="isShowUserRule=false">
+                    <div class="content">
+                        <!-- 上面的文字部分 -->
+                        <div class="top" v-html="isEn? vipRuleData.policyEn : vipRuleData.policyCn"></div>
+                        <!-- 下面的表格部分 -->
+                        <div class="bottom">
+                            <div class="title_row"><span class="user_rank">{{isEn? `User Rank` : `用户排名`}}</span><span class="growth_range">{{isEn? `Growth Range` : `增长速率` }}</span><span class="discount_rate">{{isEn? `Discount Rate` : `折扣率`}}</span></div>
+                            <div class="content_row" v-for="(item,index) in vipTableData" :key="index"><span class="user_rank">{{item.nameEn}}</span><span class="growth_range">{{item.pointBegin}}-{{item.pointEnd}}</span><span class="discount_rate">{{(item.discountFuture * 100).toFixed(2)+'%'}}</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 修改邮箱的弹窗 -->
+            <div class="change-email-wrap" v-if="isShowChangeEmail">
+                <!-- 白色框框 -->
+                <div class="main-wrap">
+                    <img src="..\..\static\menu-close-button.png" class="close-button" @click="handleChangeClose('email')">
+                    <h3 class="title" v-show="currentChangeEmailStep != 2">{{isEn? `Replace Mailbox` : `更换邮箱`}}
+                    </h3>
+                    <!-- 邮箱的容器 -->
+                    <!-- 步骤一 -->
+                    <div class="phone-wrap" v-if="currentChangeEmailStep == 0"> <span class="old-mobile">{{isEn? `Old mailbox:` :
+                            `旧邮箱：`}}</span><span class="phone-number">{{userInfo.email}}</span>
+                    </div>
+                    <!-- 步骤二 -->
+                    <div class="phone-wrap email" v-show="currentChangeEmailStep == 1"> <span class="new-mobile">{{isEn? `Please enter a new mailbox:` :
+                            `请输入新的邮箱`}}</span>
+                        <!-- 输入框 -->
+                        <div class="input-wrap required contact-number email">
+                            <!-- 输入框 -->
+                            <input type="text" :placeholder="isEn? `Please enter the verification code` : `请填写`" v-model="newEmail" class="newPhone">
+                        </div>
+                    </div>
+                    <!-- 步骤三 -->
+                    <div class="success" v-show="currentChangeEmailStep == 2">
+                        <div class="content">
+                            <img src="..\..\static\success-icon.png">
+                            <span>{{isEn? `Mailbox change succeeded!` : `邮箱更改成功！`}}</span>
+                            <div class="comfirm-button" @click="close">{{isEn? `Comfirm` : `确定`}}</div>
+                        </div>
+                    </div>
+                    <!-- 验证码部分 -->
+                    <div class="verification-code-wrap" v-show="currentChangeEmailStep != 2">
+                        <input type="text" :placeholder="isEn? `Please Fill` : `请填写`" v-model="verificationCode">
+                        <button class="get-code" :disabled="!!disabledTime" @click="getCode('email')"><span>{{disabledTime && disabledTime}}{{isEn? (disabledTime ? `Retrieve in seconds`:`Get Verification Code`) : (disabledTime ? `秒后重新获取`:`获取验证码`)}}</span>
+                        </button>
+                    </div>
+                    <div class="comfirm-button" @click="handleEmailComfirm" v-show="currentChangeEmailStep != 2">
+                        {{isEn? `Comfirm` : `确定`}}</div>
+                </div>
+            </div>
+            <!-- 修改手机的弹框 -->
+            <div class="change-mobile-wrap" v-show="isShowChangePhone">
+                <!-- 白色框框 -->
+                <div class="main-wrap">
+                    <img src="..\..\static\menu-close-button.png" class="close-button" @click="handleChangeClose('phone')">
+                    <h3 class="title" v-show="currentChangePhoneStep != 2">{{isEn? `Replace Mobile Phone` : `更换手机`}}
+                    </h3>
+                    <!-- 手机号码的容器 -->
+                    <!-- 步骤一 -->
+                    <div class="phone-wrap" v-if="currentChangePhoneStep ==0"> <span class="old-mobile">{{isEn? `Old Mobile Phone Number:` :
+                            `旧手机号码：`}}</span><span class="phone-number">{{phone}}</span>
+                    </div>
+                    <!-- 步骤二 -->
+                    <div class="phone-wrap" v-show="currentChangePhoneStep == 1"> <span class="new-mobile">{{isEn? `Please Enter A New Phone Number:` :
+                            `请输入新的电话号码`}}</span>
+                        <!-- 下拉选择框和输入框 -->
+                        <div class="input-wrap required contact-number">
+                            <!-- 下拉选择框 -->
+                            <div class="select-wrap2">
+                                <input type="text" class="select_inner" readonly="readonly" value="+86">
+                                <input type="hidden" class="select_inner hide" v-model="countryCode">
+                                <div class="icon"></div>
+                                <ul class="select-item-wrap">
+                                    <li class="select-item" :data-value="item.value" v-for="item in internationalDistrictNum" :key="item.value">
+                                        <span>+{{item.phonecode}}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- 输入框 -->
+                            <input type="text" :placeholder="isEn? `Please enter the verification code` : `请填写`" v-model="newPhone" class="newPhone">
+                        </div>
+                    </div>
+                    <!-- 步骤三 -->
+                    <div class="success" v-show="currentChangePhoneStep == 2">
+                        <div class="content">
+                            <img src="..\..\static\success-icon.png">
+                            <span>{{isEn? `Mobile Phone Number Changed Successfully!` : `手机号码更改成功！`}}</span>
+                            <div class="comfirm-button" @click="close">{{isEn? `Comfirm` : `确定`}}</div>
+                        </div>
+                    </div>
+                    <!-- 验证码部分 -->
+                    <div class="verification-code-wrap" v-show="currentChangePhoneStep != 2">
+                        <input type="text" :placeholder="isEn? `Please Fill` : `请填写`" v-model="verificationCode">
+                        <button class="get-code" :disabled="!!disabledTime" @click="getCode('phone')"><span>{{disabledTime && disabledTime}}{{isEn? (disabledTime ? `Retrieve in seconds`:`Get Verification Code`) : (disabledTime ? `秒后重新获取`:`获取验证码`)}}</span>
+                        </button>
+                    </div>
+                    <div class="comfirm-button" @click="handlePhoneComfirm" v-show="currentChangePhoneStep != 2">
+                        {{isEn? `Comfirm` : `确定`}}</div>
+                </div>
+            </div>
+            <!-- 修改密码的弹窗 -->
+            <div class="change-password-wrap" v-if="isShowChangePassword">
+                <!-- 白色框框 -->
+                <div class="main-wrap">
+                    <img src="..\..\static\menu-close-button.png" class="close-button" @click="handleChangeClose('password')">
+                    <h3 class="title" v-show="currentChangePasswordStep != 2">{{isEn? `Change Password` : `修改密码`}}
+                    </h3>
+                    <!-- 旧密码 -->
+                    <div class="item">
+                        <span class="label">{{isEn? `Login password` : `登录密码`}}</span>
+                        <input type="password" :placeholder="isEn? `Please Fill` : `请输入`" v-model="oldPassword">
+                        <span class="retrieve_password" @click="to(`./forget_password.html`)">{{isEn? `Retrieve Password` : `找回密码`}}</span>
+                    </div>
+                    <!-- 输入新密码 -->
+                    <div class="item">
+                        <span class="label">{{isEn? `Set up password` : `设置密码`}}</span>
+                        <input type="password" :placeholder="isEn? `Please Fill` : `请输入`" v-model="newPassword">
+                    </div>
+                    <!-- 再次输入 -->
+                    <div class="item">
+                        <span class="label">{{isEn? `Repeat password` : `再次输入密码`}}</span>
+                        <input type="password" :placeholder="isEn? `Please Fill` : `请输入`" v-model="repeatPassword">
+                    </div>
+                    <!-- 步骤三 -->
+                    <div class="success" v-show="currentChangePhoneStep == 2">
+                        <div class="content">
+                            <img src="..\..\static\success-icon.png">
+                            <span>{{isEn? `Mobile Phone Number Changed Successfully!` : `手机号码更改成功！`}}</span>
+                            <div class="comfirm-button" @click="close">{{isEn? `Comfirm` : `确定`}}</div>
+                        </div>
+                    </div>
+                    <div class="comfirm-button" @click="handlePasswordComfirm" v-show="currentChangePhoneStep != 2">
+                        {{isEn? `Comfirm` : `确定`}}</div>
+                </div>
+            </div>
+        </div>
+        <!-- 移动端 -->
+        <div class="wrap_phone" v-cloak="">
+            <div class="top_content">
+                <div class="picker" @click="handleSubscribed" :class="{'checked' : !!userInfo.subscribe}">
+                    <img class="checked" src="..\..\static\pons_go.png" alt="">
+                    <img class="no_checked" src="..\..\static\dingyue.png" alt="">
+                    <span>{{ !!userInfo.subscribe ? (isEn? `Unsubscribe` : `取消订阅`) : (isEn? `Subscribed` : `订阅`)}}</span>
+                </div>
+                <div class="personal_img" v-if="loginType == 1">
+                    <img :src="(userInfo.avatar?userInfo.avatar:avatarimageUrl) || '../../static/personal_weidenglu.png'" alt="">
+                    <div class="close">
+                        <span>{{isLogin? userInfo.email : 'ruianna@yahoo.com'}}</span>
+                        <img @click="loginout" src="..\..\static\close.png" alt="">
+                    </div>
+                </div>
+                <div class="personal_img" v-if="loginType == 0">
+                    <img src="..\..\static\personal_weidenglu.png" alt="">
+                    <div class="close">
+                        <span @click="to(`login.html`)">{{ isEn? `log in` : `登录`}}</span>
+                        <span></span>
+                        <span @click="to(`register.html`)">{{ isEn? `Sign up` : `注册`}}</span>
+                    </div>
+                </div>
+                <div class="vip_box">
+                    <div class="vip_register">
+                        <div class="vip_dengji">
+                            <img src="..\..\static\vip.png" alt="">
+                            <p>{{ loginType == 1 ? (isEn ? vip.nameEn : vip.nameCn) : 'VIP0' }}</p>
+                        </div>
+
+                        <span>{{loginType == 1 ? point : 0}} / {{loginType == 1 ? vip.pointEnd : 100}}</span>
+                    </div>
+                    <!-- 进度条 -->
+                    <div class="experience">
+                        <!-- 进度 -->
+                        <div class="pace" :style="{width:progressBar+`%`}"></div>
+                    </div>
+                    <div class="viewUser">
+                        <span @click="isDialog_box1 = true">
+                            {{ isEn ? `View User Rule Benefits` : `查看用户规则受益`}}
+                        </span>
+                        <img src="..\..\static\viewUser.png" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="order_box">
+                <div class="order_content">
+                    <a class="order_item" href="order-center.html">
+                        <img src="..\..\static\vip_home.png" alt="">
+                        <span>{{isEn ? `Order` : `订单` }}</span>
+                    </a>
+                    <div class="order_item" @click="to(`personal_repairOrder.html`)">
+                        <img src="..\..\static\repir_order.png" alt="">
+                        <span> {{isEn ? `Repair order` : `维修订单` }}</span>
+                    </div>
+                    <!-- <div class="order_item">
+                        <img src="../../static/coupon.png" alt="">
+                        <span>
+                            {{isEn ? `Coupon` : `优惠券` }}
+                        </span>
+                    </div> -->
+                </div>
+            </div>
+            <div class="about_box">
+                <div class="about_item">
+                    <div class="img_box">
+                        <img src="..\..\static\Invoice.png" alt="">
+                        <span>
+                            {{isEn ? `Invoice` : `发票` }}
+                        </span>
+                    </div>
+                    <img src="..\..\static\personal_next.png" alt="">
+                </div>
+                <div class="about_item">
+                    <div class="img_box">
+                        <img src="..\..\static\After%20Sales.png" alt="">
+                        <span>
+                            {{isEn ? `After Sales Service Application` : `售后服务申请` }}
+                        </span>
+                    </div>
+                    <img src="..\..\static\personal_next.png" alt="">
+                </div>
+                <div class="about_item" @click="to('personal_message.html')">
+                    <div class="img_box">
+                        <img src="..\..\static\Message.png" alt="">
+                        <span>
+                            {{isEn ? `Message` : `消息` }}
+                        </span>
+                    </div>
+                    <img src="..\..\static\personal_next.png" alt="">
+                </div>
+                <div class="about_item" @click="to('contact.html')">
+                    <div class="img_box">
+                        <img src="..\..\static\About.png" alt="">
+                        <span>{{isEn? `About` : `关于`}}</span>
+                    </div>
+                    <img src="..\..\static\personal_next.png" alt="">
+                </div>
+                <div class="about_item" @click="islanguage = true">
+                    <div class="img_box">
+                        <img src="..\..\static\personal_lang.png" alt="">
+                        <span>{{ isEn ? 'language' : '语言'}}</span>
+                    </div>
+                    <img src="..\..\static\personal_next.png" alt="">
+                </div>
+                <div class="about_item" @click="isShowPrivacyPolicy = true">
+                    <div class="img_box">
+                        <img src="..\..\static\yinsixieyi.png" alt="">
+                        <span>
+                            {{ isEn ? 'Privacy Policy' : '隐私协议'}}
+                        </span>
+                    </div>
+                    <img src="..\..\static\personal_next.png" alt="">
+                </div>
+                <div class="about_item" @click="to('setUp_750.html')">
+                    <div class="img_box">
+                        <img src="..\..\static\Set%20up.png" alt="">
+                        <span>
+                            {{ isEn ? 'Set up' : '设置'}}
+                        </span>
+                    </div>
+                    <img src="..\..\static\personal_next.png" alt="">
+                </div>
+
+            </div>
+        </div>
+        <div class="language_dialog" v-cloak="" @mousedown.self="islanguage = false" v-if="islanguage == true">
+            <div class="content">
+                <div class="chinese_box">
+                    <input type="radio" v-model="isEn" :value="false" id="lang_1">
+                    <label for="lang_1"></label>
+                    &nbsp;<span>
+                        {{ isEn ? 'Chinese' : '中文'}}
+                    </span>
+                </div>
+                <div class="English_box">
+                    <input type="radio" v-model="isEn" :value="true" id="lang_2">
+                    <label for="lang_2"></label>
+                    &nbsp;<span>
+                        {{ isEn ? 'English' : '英文'}}
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="Privacy_box" v-cloak="" v-if="isShowPrivacyPolicy">
+            <div class="privacy_content">
+                <h3 class="title">{{isEn? privacyPolicy.titleEn : privacyPolicy.titleCn}}</h3>
+                <p class="content" v-html="isEn? privacyPolicy.policyEn : privacyPolicy.policyCn"></p>
+                <div class="return" @click="isShowPrivacyPolicy = false">{{isEn? `Return` : `返回`}}</div>
+            </div>
+        </div>
+        <div v-cloak="" class="dialog_box1" v-if="isDialog_box1">
+            <div class="vip_content">
+                <h3>
+                    {{ isEn ? vipRuleData.titleEn : vipRuleData.titleCn}}
+                </h3>
+                <img @click="isDialog_box1 = false" src="..\..\static\close_tongy.png" alt="">
+                <div class="content" v-html="isEn ? vipRuleData.policyEn : vipRuleData.policyCn">
+                    <!-- TODO -->
+                </div>
+                <div class="bottom_content">
+                    <!-- <h3>User rank growth requirements and spot/ <br />futures discount rates are as follows：</h3> -->
+                    <div class="table_title">
+                        <p>
+                            <span>{{isEn ? 'User' : '用户'}}<br>
+                                {{isEn? 'Rank' : '等级'}}</span><span>{{isEn? 'Growth' : '成长'}}<br>
+                                {{isEn? 'Rank' : '等级'}}</span>
+                        </p>
+                        <span>{{isEn? 'Discount' : '折扣'}}<br> {{isEn? 'Rate' : '速度'}}</span>
+                    </div>
+                    <ul class="table_content">
+                        <li v-for="(item, index) in vipTableData" :key="index">
+                            <div class="vip_start">
+                                <h3>{{item.nameEn}}</h3>
+                                <span>{{(item.pointBegin)+'-'+(item.pointEnd)}}</span>
+                            </div>
+                            <span class="vip_end">
+                                {{(item.discountFuture * 100).toFixed(2)+'%'}}
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <iframe v-cloak="" src="..\..\public\views\footer.html" frameborder="0" class="footer" id="footer"></iframe>
+        <div class="tab_bar" v-cloak="">
+            <a href="..\..\index.html" class="tab_bar_item">
+                <img src="..\..\static\tab_bar_home.png" alt="">
+            </a>
+            <a href="products.html" class="tab_bar_item">
+                <img src="..\..\static\tab_bar_product.png" alt="">
+            </a>
+            <a href="support.html" class="tab_bar_item">
+                <img src="..\..\static\tab_bar_jishu2.png" alt="">
+            </a>
+            <a href="personal.html" class="tab_bar_item">
+                <img src="..\..\static\posnal_phone.png" alt="">
+            </a>
+        </div>
+    </div>
+    <!-- <script src="https://unpkg.com/spacingjs" defer></script> -->
+    <script src="..\utils\utils.js"></script>
+    <script src="..\..\public\axios\dist\axios.min.js"></script>
+    <script src="..\..\public\js\request.js"></script>
+    <script src="..\..\public\js\element-ui.js"></script>
+    <script src="js\personal.js?v=2.020220805"></script>
+</body>
+
+</html>

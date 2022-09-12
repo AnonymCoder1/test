@@ -1,0 +1,780 @@
+@import "../../../public/css/rem.css";
+* {
+  padding: 0;
+  margin: 0;
+}
+.internationalDistrictNum .el-input__inner {
+  min-width: 110px;
+}
+.end_phone {
+  display: none;
+}
+#app {
+  width: 100vw;
+  /* 消息容器 */
+  /* 小喇叭 */
+  /* 中间部分 */
+  /* 关闭消息按钮 */
+  /* 消息文字 */
+}
+#app .header {
+  width: 100vw;
+  height: 2.933333rem;
+  vertical-align: bottom;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 11;
+}
+#app .footer {
+  width: 100vw;
+  height: 13.3333rem;
+  vertical-align: bottom;
+}
+#app .message-wrap {
+  position: absolute;
+  top: 3rem;
+  left: 0;
+  /* animation: moves 0.5s ease infinite; */
+  z-index: 10;
+  width: 100%;
+  height: 1.8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+#app .message-wrap .horn {
+  width: 0.8rem;
+  height: 0.8rem;
+}
+#app .message-wrap .animate_set {
+  position: relative;
+  /* transform: translateX(-100%); */
+  width: 75%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  padding-left: 0.8rem;
+  overflow: hidden;
+}
+#app .message-wrap .close-button {
+  width: 0.8rem;
+  height: 0.8rem;
+  cursor: pointer;
+}
+#app .message-wrap .message {
+  transform: translateX(53.333333rem);
+  max-width: fit-content;
+  margin-left: 0.4rem;
+  color: #ccc;
+  font-size: 0.533333rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  animation: example 15s linear infinite;
+}
+@keyframes example {
+  0% {
+    transform: translateX(53.333333rem);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+.registration_button_wrap .registration_button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #4d66ff;
+  border-radius: 0.6667rem;
+  cursor: pointer;
+  padding: 0.266667rem 1.066667rem 0.333333rem 1.533333rem;
+}
+.registration_button_wrap .registration_button span {
+  font-size: 0.5333rem;
+  font-weight: 500;
+  color: #ffffff;
+  line-height: 0.7333rem;
+}
+.registration_button_wrap .registration_button img {
+  width: 0.5333rem;
+}
+.registration_button_wrap.active {
+  position: fixed;
+  top: 2.9333rem;
+  left: 0;
+  width: 100%;
+  height: 1.6667rem;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+.registration_button_wrap.active .registration_button {
+  position: absolute;
+  top: 0.1667rem;
+  left: unset;
+  right: 0.333333rem;
+  transform: translateX(0);
+}
+.img-wrap {
+  margin-top: 2.9333rem;
+}
+.img-wrap img {
+  width: 100%;
+  vertical-align: top;
+}
+.img-wrap_phone {
+  display: none;
+}
+.bg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 99;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.76);
+}
+.bg .register-wrap {
+  box-sizing: border-box;
+  padding: 1.4333rem 2rem 0;
+  position: relative;
+  width: 16.6667rem;
+  height: 21.7333rem;
+  background-color: #fff;
+  border-radius: 0.3333rem;
+}
+.bg .register-wrap h1 {
+  margin: 0;
+  font-size: 1.0667rem;
+  font-weight: 500;
+  line-height: 1.5rem;
+  letter-spacing: 0.04rem;
+}
+.bg .register-wrap .name,
+.bg .register-wrap .contact-phone-number,
+.bg .register-wrap .email,
+.bg .register-wrap .verification-code,
+.bg .register-wrap .password,
+.bg .register-wrap .enter-the-password-again {
+  box-sizing: border-box;
+  margin-top: 0.8rem;
+  padding-left: 0.5333rem;
+  width: 12.6333rem;
+  height: 1.4rem;
+  border-radius: 0.2rem;
+  border: 0.0333rem solid #d2d2d2;
+  font-size: 0.5333rem;
+  font-weight: 400;
+  line-height: 0.7333rem;
+}
+.bg .register-wrap .name:focus,
+.bg .register-wrap .contact-phone-number:focus,
+.bg .register-wrap .email:focus,
+.bg .register-wrap .verification-code:focus,
+.bg .register-wrap .password:focus,
+.bg .register-wrap .enter-the-password-again:focus {
+  outline-color: #4d66ff;
+}
+.bg .register-wrap .name::placeholder,
+.bg .register-wrap .contact-phone-number::placeholder,
+.bg .register-wrap .email::placeholder,
+.bg .register-wrap .verification-code::placeholder,
+.bg .register-wrap .password::placeholder,
+.bg .register-wrap .enter-the-password-again::placeholder {
+  font-size: 0.5333rem;
+  font-weight: 400;
+  color: #d3d3d3;
+  line-height: 0.7333rem;
+}
+.bg .register-wrap .name {
+  margin-top: 0.8667rem;
+}
+.bg .register-wrap .email {
+  width: 9.5667rem;
+}
+.bg .register-wrap .send-button {
+  margin-top: 0.8333rem;
+  width: 2.6667rem;
+  height: 1.4rem;
+  background: rgba(255, 255, 255, 0);
+  border-radius: 0.2rem;
+  border: 0.0333rem solid #4d66ff;
+  cursor: pointer;
+  font-size: 0.5333rem;
+  font-weight: 400;
+  color: #4d66ff;
+  line-height: 0.7333rem;
+}
+.bg .register-wrap .send-button:focus-visible {
+  border: 0.0333rem solid #4d66ff;
+  color: #4d66ff;
+}
+.bg .register-wrap .user-agreement-wrap {
+  margin-top: 0.2667rem;
+  display: flex;
+  max-width: 5.1333rem;
+  height: 0.7333rem;
+}
+.bg .register-wrap .user-agreement-wrap input {
+  display: none;
+}
+.bg .register-wrap .user-agreement-wrap input:checked + label {
+  background: url("../../../static/icon/checked.png") 0 0 / 100% 100%;
+}
+.bg .register-wrap .user-agreement-wrap label {
+  margin-top: 0.1rem;
+  margin-right: 0.3333rem;
+  background: url("../../../static/icon/no-check.png") 0 0 / 100% 100%;
+  width: 0.5333rem;
+  height: 0.5333rem;
+  cursor: pointer;
+}
+.bg .register-wrap .register-button {
+  margin-top: 0.7rem;
+  width: 12.6333rem;
+  height: 1.4rem;
+  background: #4d66ff;
+  border-radius: 0.8rem;
+  color: #fff;
+  font-size: 0.5333rem;
+  font-weight: 400;
+  line-height: 0.7333rem;
+  letter-spacing: 0.02rem;
+  cursor: pointer;
+}
+.bg .register-wrap .register-button:focus-visible {
+  outline: none;
+}
+.bg .register-wrap .user-agreement,
+.bg .register-wrap .sign-up-now {
+  white-space: nowrap;
+  text-decoration: none;
+  font-size: 0.5333rem;
+  font-weight: 400;
+  color: #4d66ff;
+  line-height: 0.7333rem;
+}
+.bg .register-wrap .sign-up-now {
+  display: block;
+  margin-top: 0.5333rem;
+  text-align: center;
+}
+.bg .register-wrap input[type="checkbox"] {
+  width: 0.5333rem;
+  height: 0.5333rem;
+  min-width: 0.3333rem;
+  min-height: 0.3333rem;
+  vertical-align: middle;
+}
+.bg .register-wrap input[disabled] {
+  border-color: #ccc;
+  color: #ccc;
+  cursor: not-allowed;
+}
+.bg .login-wrap {
+  box-sizing: border-box;
+  padding: 1.433333rem 2rem 0;
+  position: relative;
+  z-index: 9999;
+  width: 16.666667rem;
+  height: 15rem;
+  background-color: #fff;
+  border-radius: 0.333333rem;
+}
+.bg .login-wrap h1 {
+  margin: 0;
+  font-size: 1.066667rem;
+  font-weight: 500;
+  line-height: 1.5rem;
+  letter-spacing: 0.04rem;
+}
+.bg .login-wrap .email,
+.bg .login-wrap .password {
+  box-sizing: border-box;
+  margin-top: 0.866667rem;
+  padding-left: 0.533333rem;
+  width: 12.633333rem;
+  height: 1.4rem;
+  border-radius: 0.2rem;
+  border: 0.0333rem solid #d2d2d2;
+  font-size: 0.533333rem;
+  font-weight: 400;
+  line-height: 0.733333rem;
+}
+.bg .login-wrap .email:focus,
+.bg .login-wrap .password:focus {
+  outline-color: #4d66ff;
+}
+.bg .login-wrap .email::placeholder,
+.bg .login-wrap .password::placeholder {
+  font-size: 0.533333rem;
+  font-weight: 400;
+  color: #d3d3d3;
+  line-height: 0.733333rem;
+}
+.bg .login-wrap .password {
+  margin-top: 0.8rem;
+}
+.bg .login-wrap .forget-password,
+.bg .login-wrap .create-account {
+  display: inline-block;
+  margin-top: 0.266667rem;
+  font-size: 0.533333rem;
+  font-weight: 400;
+  color: #4d66ff;
+  line-height: 0.733333rem;
+  text-decoration: none;
+}
+.bg .login-wrap .create-account {
+  margin-top: 0.8rem;
+}
+.bg .login-wrap .create-account.phone {
+  display: none;
+}
+.bg .login-wrap .sign-in-button {
+  margin-top: 0.8rem;
+  width: 12.633333rem;
+  height: 1.4rem;
+  border: none;
+  background: #4d66ff;
+  border-radius: 0.8rem;
+  color: #fff;
+  font-size: 0.533333rem;
+  font-weight: 400;
+  line-height: 0.733333rem;
+  letter-spacing: 0.02rem;
+  cursor: pointer;
+}
+.bg .login-wrap .sign-in-button:focus-visible {
+  outline: none;
+}
+.bg .login-wrap .or-login-with {
+  display: block;
+  margin: 0.8rem auto 0;
+  width: 5.333333rem;
+  position: relative;
+  font-size: 0.533333rem;
+  font-weight: 400;
+  color: #868686;
+  text-align: center;
+  line-height: 0.733333rem;
+  letter-spacing: 0.02rem;
+}
+.bg .login-wrap .or-login-with::before,
+.bg .login-wrap .or-login-with::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: -3.666667rem;
+  width: 3.666667rem;
+  height: 0.033333rem;
+  background-color: #d2d2d2;
+}
+.bg .login-wrap .or-login-with::after {
+  left: 5.333333rem;
+}
+.bg .login-wrap .icon-wrap {
+  width: 3.333333rem;
+  height: 1.066667rem;
+  margin: 0.8rem auto 0;
+  display: flex;
+  justify-content: space-between;
+}
+.bg .login-wrap .icon-wrap img {
+  width: 1.066667rem;
+  height: 1.066667rem;
+}
+.bg .registration-wrap {
+  position: relative;
+  box-sizing: border-box;
+  padding: 1.4333rem 2rem 1.0667rem;
+  overflow: auto;
+  width: 17rem;
+  background: #ffffff;
+  border-radius: 0.3333rem;
+}
+.bg .registration-wrap .close-button {
+  position: absolute;
+  right: 0.4667rem;
+  top: 0.4667rem;
+  width: 1.3333rem;
+  height: 1.3333rem;
+  cursor: pointer;
+}
+.bg .registration-wrap .title {
+  margin-bottom: 1rem;
+  font-size: 1.0667rem;
+  font-weight: 500;
+  line-height: 1.5rem;
+}
+.bg .registration-wrap .radio_wrap {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+}
+.bg .registration-wrap .container {
+  margin-top: 0.6rem;
+  overflow-x: hidden !important;
+  max-height: 20rem;
+  overflow: auto;
+}
+.bg .registration-wrap .container > .el-form-item {
+  width: 100%;
+  height: 1.4rem;
+}
+.bg .registration-wrap .container > .el-form-item .el-input {
+  height: 100%;
+}
+.bg .registration-wrap .container .phone-wrap {
+  display: flex;
+  justify-content: space-between;
+}
+.bg .registration-wrap .container .phone-wrap .phone-code {
+  width: 3.6667rem;
+}
+.bg .registration-wrap .container .phone-wrap .input_phone {
+  width: 8.4333rem;
+}
+.bg .registration-wrap .container .phone-wrap .input_phone .el-form-item__content {
+  width: 8.4333rem;
+}
+.bg .registration-wrap .container .form-wrap .radio-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.bg .registration-wrap .container .form-wrap .radio-wrap > span {
+  margin-right: 0.5333rem;
+  font-size: 0.533333rem;
+  line-height: 0.733333rem;
+  width: fit-content;
+}
+.bg .registration-wrap .container .form-wrap .radio-wrap .el-radio-group {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.bg .registration-wrap .container .form-wrap .radio-wrap .el-radio-group label {
+  flex: 1;
+}
+.bg .registration-wrap .container .form-wrap .checkbox-wrap {
+  display: flex;
+}
+.bg .registration-wrap .container .form-wrap .checkbox-wrap > span {
+  margin-right: 0.5333rem;
+  font-size: 0.533333rem;
+  width: fit-content;
+  white-space: nowrap;
+}
+.bg .registration-wrap .container .form-wrap .checkbox-wrap .el-checkbox {
+  margin-right: 0;
+}
+.bg .registration-wrap .container .form-wrap .checkbox-wrap .el-checkbox .el-checkbox__input .el-checkbox__inner {
+  width: 0.533333rem;
+  height: 0.533333rem;
+  border: none;
+  background: url("../../../static/icon/no-check.png") 0 0 / 100% 100%;
+}
+.bg .registration-wrap .container .form-wrap .checkbox-wrap .el-checkbox .el-checkbox__label {
+  margin-right: 0.5333rem;
+  font-size: 0.533333rem;
+  line-height: 1.333333rem;
+  width: fit-content;
+  white-space: nowrap;
+  color: #000;
+}
+.bg .registration-wrap .container .form-wrap .checkbox-wrap .el-checkbox.is-checked .el-checkbox__input .el-checkbox__inner {
+  width: 0.533333rem;
+  height: 0.533333rem;
+  border: none;
+  background: url("../../../static/icon/checked.png") 0 0 / 100% 100%;
+}
+.bg .registration-wrap .container .form-wrap .checkbox-wrap .el-checkbox.is-checked .el-checkbox__input .el-checkbox__inner::after {
+  all: unset !important;
+}
+.bg .registration-wrap .container .form-wrap .selector-wrap {
+  display: flex;
+}
+.bg .registration-wrap .container .form-wrap .selector-wrap > span {
+  font-size: 0.5333rem;
+  width: fit-content;
+  margin-right: 0.5333rem;
+  white-space: nowrap;
+  color: #606266;
+}
+.bg .registration-wrap .container .form-wrap .selector-wrap .el-select {
+  width: 100%;
+}
+.bg .registration-wrap .container .form-wrap .date-picker {
+  display: flex;
+  align-items: center;
+}
+.bg .registration-wrap .container .form-wrap .date-picker > span {
+  margin-right: 0.5333rem;
+  font-size: 0.466667rem;
+  height: 1.3333rem;
+  width: fit-content;
+  white-space: nowrap;
+  color: #606266;
+}
+.bg .registration-wrap .container .form-wrap .date-picker .el-date-editor.el-input {
+  width: 100%;
+}
+.bg .registration-wrap .container input::-webkit-outer-spin-button,
+.bg .registration-wrap .container input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+.bg .registration-wrap .container input[type="number"] {
+  -moz-appearance: textfield;
+}
+.bg .registration-wrap .container::-webkit-scrollbar {
+  width: 0.2667rem;
+  background: #f1f1f1;
+  border-radius: 0.1333rem;
+}
+.bg .registration-wrap .container::-webkit-scrollbar-thumb {
+  background: #bbbbbb;
+  width: 0.2667rem;
+  border-radius: 0.1333rem;
+}
+.bg .registration-wrap .container .el-checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+}
+.bg .registration-wrap .container textarea {
+  border: 0.033333rem solid #dcdfe6;
+}
+.bg .registration-wrap .container textarea:focus {
+  border: 0.066667rem solid #4d66ff;
+}
+.bg .registration-wrap .container textarea::placeholder {
+  font-weight: 500;
+}
+.bg .registration-wrap .container .el-input__inner:active,
+.bg .registration-wrap .container .el-input__inner:focus {
+  border: 0.066667rem solid #4d66ff;
+}
+.bg .registration-wrap .read-and-agree {
+  display: flex;
+  align-items: center;
+  line-height: 0.5333rem;
+  margin-bottom: 0.6667rem;
+}
+.bg .registration-wrap .read-and-agree input {
+  display: none;
+}
+.bg .registration-wrap .read-and-agree input:checked + label {
+  background: url("../../../static/icon/checked.png") 0 0 / 100% 100%;
+}
+.bg .registration-wrap .read-and-agree label {
+  display: inline-block;
+  width: 0.5333rem;
+  height: 0.5333rem;
+  background: url("../../../static/icon/no-check.png") 0 0 / 100% 100%;
+  cursor: pointer;
+}
+.bg .registration-wrap .read-and-agree span {
+  margin-left: 0.2667rem;
+  font-size: 0.5333rem;
+  color: #868686;
+  line-height: 0.7333rem;
+}
+.bg .registration-wrap .read-and-agree span.privacy-policy {
+  color: #4d66ff;
+  cursor: pointer;
+}
+.bg .registration-wrap .submit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 12.6333rem;
+  height: 1.4rem;
+  margin-bottom: 0.5667rem;
+  background: #4d66ff;
+  border-radius: 0.8rem;
+  font-size: 0.5333rem;
+  color: #ffffff;
+  line-height: 0.7333rem;
+  cursor: pointer;
+}
+.bg .registration-wrap > .bottom {
+  display: inline-block;
+  font-size: 0.4667rem;
+  color: #868686;
+  line-height: 0.6667rem;
+  text-align: center;
+}
+.bg .registration-wrap .el-radio-group label {
+  width: 50%;
+  display: flex;
+  align-items: center;
+}
+.bg .registration-wrap .el-radio-group .el-radio__label {
+  font-size: 0.533333rem;
+  line-height: 0.733333rem;
+  color: #000;
+}
+.bg .registration-wrap .el-radio-group .el-radio__inner {
+  width: 0.8rem;
+  height: 0.8rem;
+  background: url("../../../static/icon/radio-nocheck.png") 0 0 / 100% 100%;
+  border: none;
+}
+.bg .registration-wrap .el-radio-group span.is-checked {
+  width: 0.8rem;
+  height: 0.8rem;
+  background: url("../../../static/icon/radio-check.png") 0 0 / 100% 100%;
+}
+.bg .registration-wrap .el-radio-group span.is-checked .el-radio__inner::after {
+  background-color: transparent !important;
+}
+.bg .registration-wrap .el-radio-group span.is-checked .el-radio__label {
+  color: #000000;
+  line-height: 0.733333rem;
+}
+.bg .privacy_policy_wrap {
+  position: relative;
+  box-sizing: border-box;
+  padding: 1.4333rem 2rem 1.0667rem;
+  overflow: auto;
+  width: 16.6667rem;
+  background: #ffffff;
+  border-radius: 0.3333rem;
+}
+.bg .privacy_policy_wrap .title {
+  margin-bottom: 1.0667rem;
+  font-size: 1.0667rem;
+  font-weight: 500;
+  line-height: 1.5rem;
+}
+.bg .privacy_policy_wrap .content {
+  max-height: 14.7333rem;
+  overflow: auto;
+  font-size: 0.5333rem;
+  line-height: 0.8667rem;
+}
+.bg .privacy_policy_wrap .content::-webkit-scrollbar {
+  width: 0.2667rem;
+  background: #f1f1f1;
+  border-radius: 0.1333rem;
+}
+.bg .privacy_policy_wrap .content::-webkit-scrollbar-thumb {
+  background: #bbbbbb;
+  width: 0.2667rem;
+  border-radius: 0.1333rem;
+}
+.bg .privacy_policy_wrap .return {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1.6667rem;
+  width: 12.6333rem;
+  height: 1.4rem;
+  background: #4d66ff;
+  border-radius: 0.8rem;
+  font-size: 0.5333rem;
+  color: #ffffff;
+  line-height: 0.7333rem;
+  cursor: pointer;
+}
+.bg .registration_success {
+  padding: 6.9667rem 2.0667rem 5.9667rem;
+  position: relative;
+  background: #ffffff;
+  border-radius: 0.3333rem;
+}
+.bg .registration_success .close-button {
+  position: absolute;
+  right: 0.4667rem;
+  top: 0.4667rem;
+  width: 1.3333rem;
+  height: 1.3333rem;
+  cursor: pointer;
+}
+.bg .registration_success .content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 12.6667rem;
+  height: 10rem;
+  text-align: center;
+}
+.bg .registration_success .content .submit_success {
+  width: 4.6rem;
+}
+.bg .registration_success .content p {
+  margin-top: 1.1667rem;
+  font-size: 0.6667rem;
+  font-weight: 500;
+  line-height: 0.9333rem;
+}
+.bg .registration_success .content span {
+  font-size: 0.4667rem;
+  color: #868686;
+  line-height: 0.6667rem;
+}
+.bg .wrap {
+  box-sizing: border-box;
+  padding: 1.4333rem 2rem 0;
+  position: relative;
+  width: 16.6667rem;
+  height: 21.7333rem;
+  background-color: #fff;
+  border-radius: 0.3333rem;
+}
+.bg .user_agreement {
+  font-size: 1.0667rem;
+  font-weight: 500;
+  line-height: 1.5rem;
+}
+.bg .user_agreement .title {
+  margin-bottom: 0.5333rem;
+}
+.bg .user_agreement .content {
+  height: 13.3333rem;
+  font-size: 0.5333rem;
+  line-height: 0.8667rem;
+  margin-bottom: 1rem;
+  overflow: auto;
+}
+.bg .user_agreement .content::-webkit-scrollbar {
+  width: 0.2667rem;
+  background: #f1f1f1;
+  border-radius: 0.1333rem;
+}
+.bg .user_agreement .content::-webkit-scrollbar-thumb {
+  background: #bbbbbb;
+  width: 0.2667rem;
+  border-radius: 0.1333rem;
+}
+.bg .user_agreement .return_button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 12.6333rem;
+  height: 1.4rem;
+  background: #4d66ff;
+  border-radius: 0.8rem;
+  font-size: 0.533333rem;
+  color: #ffffff;
+  line-height: 0.733333rem;
+  cursor: pointer;
+}
+.end img {
+  width: 100%;
+  vertical-align: top;
+}
+.no_active img {
+  width: 100%;
+  vertical-align: top;
+}
